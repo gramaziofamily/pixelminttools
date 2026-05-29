@@ -12,7 +12,7 @@ export default function AboutPage() {
 
         <h1
   style={{
-    fontSize: "42px",
+    fontSize: "36px",
     fontWeight: "900",
     marginTop: "28px",
     lineHeight: "1.05",
