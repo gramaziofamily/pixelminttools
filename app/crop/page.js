@@ -6,6 +6,8 @@ export default function CropPage() {
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState("");
   const [croppedImage, setCroppedImage] = useState("");
+  const [croppedBlob, setCroppedBlob] = useState(null);
+  const [fileName, setFileName] = useState("pixelmint-cropped-image.png");
   const [message, setMessage] = useState("");
 
   const presets = [
@@ -28,10 +30,15 @@ export default function CropPage() {
       setImage(img);
       setPreview(url);
       setCroppedImage("");
+      setCroppedBlob(null);
       setMessage("");
     };
 
     img.src = url;
+  }
+
+  function makeFileName(label) {
+    return `pixelmint-${label.toLowerCase().replaceAll(" ", "-")}.png`;
   }
 
   function cropToSize(label, targetWidth, targetHeight) {
@@ -71,19 +78,36 @@ export default function CropPage() {
       targetHeight
     );
 
-    const result = canvas.toDataURL("image/png");
-    setCroppedImage(result);
-    setMessage(`${label}: ${targetWidth} × ${targetHeight}`);
+    const dataUrl = canvas.toDataURL("image/png");
+    setCroppedImage(dataUrl);
+
+    canvas.toBlob((blob) => {
+      setCroppedBlob(blob);
+      setFileName(makeFileName(label));
+      setMessage(`${label}: ${targetWidth} × ${targetHeight}`);
+    }, "image/png");
+  }
+
+  function downloadImage() {
+    if (!croppedBlob) return;
+
+    const url = URL.createObjectURL(croppedBlob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
 
   async function copyImage() {
-    if (!croppedImage) return;
-
-    const blob = await fetch(croppedImage).then((res) => res.blob());
+    if (!croppedBlob) return;
 
     try {
       await navigator.clipboard.write([
-        new ClipboardItem({ "image/png": blob }),
+        new ClipboardItem({ "image/png": croppedBlob }),
       ]);
       alert("Image copied!");
     } catch {
@@ -92,10 +116,9 @@ export default function CropPage() {
   }
 
   async function shareImage() {
-    if (!croppedImage) return;
+    if (!croppedBlob) return;
 
-    const blob = await fetch(croppedImage).then((res) => res.blob());
-    const file = new File([blob], "pixelmint-cropped-image.png", {
+    const file = new File([croppedBlob], fileName, {
       type: "image/png",
     });
 
@@ -181,23 +204,22 @@ export default function CropPage() {
                 style={{ maxWidth: "100%", borderRadius: "16px" }}
               />
 
-              <a
-                href={croppedImage}
-                download="pixelmint-cropped-image.png"
+              <button
+                onClick={downloadImage}
                 style={{
-                  display: "block",
+                  width: "100%",
                   marginTop: "18px",
                   padding: "16px",
                   borderRadius: "14px",
+                  border: "none",
                   background: "#102033",
                   color: "white",
-                  textAlign: "center",
                   fontWeight: "900",
-                  textDecoration: "none",
+                  fontSize: "18px",
                 }}
               >
                 Download Cropped Image
-              </a>
+              </button>
 
               <button
                 onClick={shareImage}
