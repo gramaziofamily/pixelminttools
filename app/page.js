@@ -70,11 +70,9 @@ export default function Home() {
 
           style={{
 
-            fontSize: "clamp(48px, 11vw, 90px)",
-
-            lineHeight: "0.95",
-
-            letterSpacing: "-4px",
+            fontSize: "clamp(42px, 9vw, 72px)",
+lineHeight: "1",
+letterSpacing: "-2px",
 
             margin: "0 0 18px",
 
