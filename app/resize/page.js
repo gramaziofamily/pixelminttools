@@ -6,6 +6,7 @@ export default function ResizePage() {
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState("");
   const [resizedPreview, setResizedPreview] = useState("");
+  const [copyPreview, setCopyPreview] = useState("");
   const [width, setWidth] = useState("");
   const [height, setHeight] = useState("");
   const [message, setMessage] = useState("");
@@ -23,6 +24,7 @@ export default function ResizePage() {
       setWidth(img.width);
       setHeight(img.height);
       setResizedPreview("");
+      setCopyPreview("");
       setMessage("");
     };
 
@@ -39,9 +41,12 @@ export default function ResizePage() {
     const ctx = canvas.getContext("2d");
     ctx.drawImage(image, 0, 0, Number(width), Number(height));
 
+    const dataUrl = canvas.toDataURL("image/png");
+    setCopyPreview(dataUrl);
+
     canvas.toBlob((blob) => {
-      const resizedUrl = URL.createObjectURL(blob);
-      setResizedPreview(resizedUrl);
+      const blobUrl = URL.createObjectURL(blob);
+      setResizedPreview(blobUrl);
       setMessage(`Image resized to ${width} × ${height}`);
     }, "image/png");
   }
@@ -58,9 +63,9 @@ export default function ResizePage() {
   }
 
   async function copyImage() {
-    if (!resizedPreview) return;
+    if (!copyPreview) return;
 
-    const blob = await fetch(resizedPreview).then((res) => res.blob());
+    const blob = await fetch(copyPreview).then((res) => res.blob());
 
     try {
       await navigator.clipboard.write([
@@ -68,7 +73,7 @@ export default function ResizePage() {
       ]);
       alert("Image copied!");
     } catch {
-      alert("Copy may not work on this browser.");
+      alert("Copy may not work on this browser. Try Share / Save to Photos.");
     }
   }
 
@@ -97,8 +102,7 @@ export default function ResizePage() {
         background:
           "radial-gradient(circle at top left, #b7fff2 0%, transparent 35%), linear-gradient(135deg, #f0fffb 0%, #e8f7ff 45%, #fff7ed 100%)",
         padding: "36px 20px",
-        fontFamily:
-          "Avenir Next, Inter, ui-sans-serif, system-ui, sans-serif",
+        fontFamily: "Avenir Next, Inter, ui-sans-serif, system-ui, sans-serif",
         color: "#102033",
       }}
     >
@@ -111,13 +115,7 @@ export default function ResizePage() {
           Free Image <span style={{ color: "#00bfa6" }}>Resizer</span>
         </h1>
 
-        <div
-          style={{
-            background: "white",
-            borderRadius: "24px",
-            padding: "28px",
-          }}
-        >
+        <div style={{ background: "white", borderRadius: "24px", padding: "28px" }}>
           <input type="file" accept="image/*" onChange={handleImageUpload} />
 
           {preview && (
@@ -127,19 +125,10 @@ export default function ResizePage() {
               <img
                 src={preview}
                 alt="Original preview"
-                style={{
-                  maxWidth: "100%",
-                  borderRadius: "16px",
-                }}
+                style={{ maxWidth: "100%", borderRadius: "16px" }}
               />
 
-              <div
-                style={{
-                  marginTop: "24px",
-                  display: "grid",
-                  gap: "12px",
-                }}
-              >
+              <div style={{ marginTop: "24px", display: "grid", gap: "12px" }}>
                 <input
                   type="number"
                   value={width}
@@ -183,10 +172,7 @@ export default function ResizePage() {
               <img
                 src={resizedPreview}
                 alt="Resized preview"
-                style={{
-                  maxWidth: "100%",
-                  borderRadius: "16px",
-                }}
+                style={{ maxWidth: "100%", borderRadius: "16px" }}
               />
 
               <button
