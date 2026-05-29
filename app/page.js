@@ -86,7 +86,9 @@ letterSpacing: "-2px",
 
           <br />
 
-          <span style={{ color: "#00bfa6" }}> Tools</span>
+<span style={{ whiteSpace: "nowrap" }}>
+  PixelMint <span style={{ color: "#00bfa6" }}>Tools</span>
+</span>
 
         </h1>
 
