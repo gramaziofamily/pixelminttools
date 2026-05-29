@@ -55,7 +55,7 @@ export default function ConvertPage() {
   async function shareImage() {
     if (!convertedImage) return;
 
-    const blob = await fetch(convertedImage).then((r) => r.blob());
+    const blob = await fetch(convertedImage).then((res) => res.blob());
     const file = new File([blob], `pixelmint-converted.${format}`, {
       type: blob.type,
     });
@@ -73,30 +73,20 @@ export default function ConvertPage() {
   async function copyImage() {
     if (!convertedImage) return;
 
-    const img = new Image();
-    img.src = convertedImage;
+    const blob = await fetch(convertedImage).then((res) => res.blob());
 
-    img.onload = async () => {
-      const canvas = document.createElement("canvas");
-      canvas.width = img.width;
-      canvas.height = img.height;
+    try {
+      await navigator.clipboard.write([
+        new ClipboardItem({
+          "image/png": blob,
+        }),
+      ]);
 
-      const ctx = canvas.getContext("2d");
-      ctx.drawImage(img, 0, 0);
-
-      canvas.toBlob(async (blob) => {
-        try {
-          await navigator.clipboard.write([
-            new ClipboardItem({
-              "image/png": blob,
-            }),
-          ]);
-          alert("Image copied!");
-        } catch {
-          alert("Copy may not work on this browser. Try Share / Save to Photos instead.");
-        }
-      }, "image/png");
-    };
+      alert("Image copied!");
+    } catch (error) {
+      console.error(error);
+      alert("Copy may not work on this browser. Try Share / Save to Photos instead.");
+    }
   }
 
   return (
