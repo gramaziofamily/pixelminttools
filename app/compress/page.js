@@ -53,9 +53,14 @@ export default function CompressPage() {
     if (!compressedImage) return;
 
     const blob = await fetch(compressedImage).then((res) => res.blob());
-    const file = new File([blob], "pixelmint-compressed-image.jpg", {
-      type: blob.type,
-    });
+
+    const file = new File(
+      [blob],
+      "pixelmint-compressed-image.jpg",
+      {
+        type: blob.type,
+      }
+    );
 
     if (navigator.canShare?.({ files: [file] })) {
       await navigator.share({
@@ -70,19 +75,37 @@ export default function CompressPage() {
   async function copyImage() {
     if (!compressedImage) return;
 
-    const blob = await fetch(compressedImage).then((res) => res.blob());
+    const img = new Image();
+    img.src = compressedImage;
 
-    try {
-      await navigator.clipboard.write([
-        new ClipboardItem({
-          "image/png": blob,
-        }),
-      ]);
+    img.onload = async () => {
+      const canvas = document.createElement("canvas");
+      canvas.width = img.width;
+      canvas.height = img.height;
 
-      alert("Image copied!");
-    } catch {
-      alert("Copy may not work on this browser. Try Share / Save to Photos instead.");
-    }
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(img, 0, 0);
+
+      canvas.toBlob(
+        async (blob) => {
+          try {
+            await navigator.clipboard.write([
+              new ClipboardItem({
+                "image/png": blob,
+              }),
+            ]);
+
+            alert("Image copied!");
+          } catch {
+            alert(
+              "Copy may not work on this browser. Try Share / Save to Photos instead."
+            );
+          }
+        },
+        "image/png",
+        1
+      );
+    };
   }
 
   return (
@@ -92,16 +115,29 @@ export default function CompressPage() {
         background:
           "radial-gradient(circle at top left, #b7fff2 0%, transparent 35%), linear-gradient(135deg, #f0fffb 0%, #e8f7ff 45%, #fff7ed 100%)",
         padding: "36px 20px",
-        fontFamily: "Avenir Next, Inter, ui-sans-serif, system-ui, sans-serif",
+        fontFamily:
+          "Avenir Next, Inter, ui-sans-serif, system-ui, sans-serif",
         color: "#102033",
       }}
     >
       <section style={{ maxWidth: "900px", margin: "0 auto" }}>
-        <a href="/" style={{ color: "#04786b", fontWeight: "800" }}>
+        <a
+          href="/"
+          style={{
+            color: "#04786b",
+            fontWeight: "800",
+          }}
+        >
           ← Back to Home
         </a>
 
-        <h1 style={{ fontSize: "42px", fontWeight: "900", marginTop: "28px" }}>
+        <h1
+          style={{
+            fontSize: "42px",
+            fontWeight: "900",
+            marginTop: "28px",
+          }}
+        >
           Free Image <span style={{ color: "#00bfa6" }}>Compressor</span>
         </h1>
 
@@ -110,10 +146,15 @@ export default function CompressPage() {
             background: "white",
             borderRadius: "24px",
             padding: "28px",
-            boxShadow: "0 18px 45px rgba(15,79,88,0.12)",
+            boxShadow:
+              "0 18px 45px rgba(15,79,88,0.12)",
           }}
         >
-          <input type="file" accept="image/*" onChange={handleImageUpload} />
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageUpload}
+          />
 
           {preview && (
             <>
@@ -139,8 +180,13 @@ export default function CompressPage() {
                   min="10"
                   max="100"
                   value={quality}
-                  onChange={(e) => setQuality(e.target.value)}
-                  style={{ width: "100%", marginTop: "12px" }}
+                  onChange={(e) =>
+                    setQuality(e.target.value)
+                  }
+                  style={{
+                    width: "100%",
+                    marginTop: "12px",
+                  }}
                 />
 
                 <button
@@ -165,9 +211,18 @@ export default function CompressPage() {
 
           {compressedImage && (
             <>
-              <h2 style={{ marginTop: "28px" }}>Compressed Image</h2>
+              <h2 style={{ marginTop: "28px" }}>
+                Compressed Image
+              </h2>
 
-              <p style={{ color: "#04786b", fontWeight: "800" }}>{message}</p>
+              <p
+                style={{
+                  color: "#04786b",
+                  fontWeight: "800",
+                }}
+              >
+                {message}
+              </p>
 
               <img
                 src={compressedImage}
