@@ -1,4 +1,83 @@
+"use client";
+
+import { useState } from "react";
+
 export default function ConvertPage() {
+  const [preview, setPreview] = useState("");
+  const [image, setImage] = useState(null);
+  const [format, setFormat] = useState("png");
+  const [convertedImage, setConvertedImage] = useState("");
+
+  function handleImageUpload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+
+    img.onload = () => {
+      setImage(img);
+      setPreview(url);
+      setConvertedImage("");
+    };
+
+    img.src = url;
+  }
+
+  function convertImage() {
+    if (!image) return;
+
+    const canvas = document.createElement("canvas");
+    canvas.width = image.width;
+    canvas.height = image.height;
+
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(image, 0, 0);
+
+    const mimeType =
+      format === "png" ? "image/png" : "image/jpeg";
+
+    const result = canvas.toDataURL(mimeType);
+    setConvertedImage(result);
+  }
+
+  async function shareImage() {
+    if (!convertedImage) return;
+
+    const blob = await fetch(convertedImage).then((r) => r.blob());
+
+    const file = new File(
+      [blob],
+      `pixelmint-converted.${format}`,
+      { type: blob.type }
+    );
+
+    if (navigator.canShare?.({ files: [file] })) {
+      await navigator.share({
+        files: [file],
+        title: "Converted Image",
+      });
+    }
+  }
+
+  async function copyImage() {
+    if (!convertedImage) return;
+
+    const blob = await fetch(convertedImage).then((r) => r.blob());
+
+    try {
+      await navigator.clipboard.write([
+        new ClipboardItem({
+          [blob.type]: blob,
+        }),
+      ]);
+
+      alert("Image copied!");
+    } catch {
+      alert("Copy not supported on this browser.");
+    }
+  }
+
   return (
     <main
       style={{
@@ -10,37 +89,178 @@ export default function ConvertPage() {
           "Avenir Next, Inter, ui-sans-serif, system-ui, sans-serif",
       }}
     >
-      <section style={{ maxWidth: "900px", margin: "0 auto" }}>
-        <a href="/">← Back to tools</a>
+      <section
+        style={{
+          maxWidth: "900px",
+          margin: "0 auto",
+        }}
+      >
+        <a
+          href="/"
+          style={{
+            color: "#04786b",
+            fontWeight: "800",
+          }}
+        >
+          ← Back to Home
+        </a>
 
-        <div style={{ fontSize: "42px", marginTop: "28px" }}>🔄</div>
-
-        <h1 style={{ fontSize: "56px", fontWeight: "900" }}>
-          JPG / PNG <span style={{ color: "#00bfa6" }}>Converter</span>
+        <h1
+          style={{
+            fontSize: "42px",
+            fontWeight: "900",
+            marginTop: "28px",
+          }}
+        >
+          JPG / PNG{" "}
+          <span style={{ color: "#00bfa6" }}>
+            Converter
+          </span>
         </h1>
-
-        <p style={{ fontSize: "22px", color: "#64748b" }}>
-          Convert JPG images to PNG and PNG images to JPG instantly.
-        </p>
 
         <div
           style={{
             background: "white",
-            padding: "30px",
             borderRadius: "24px",
-            marginTop: "24px",
+            padding: "28px",
+            boxShadow:
+              "0 18px 45px rgba(15,79,88,0.12)",
           }}
         >
-          <div
-            style={{
-              border: "2px dashed #9adfd5",
-              borderRadius: "20px",
-              padding: "40px",
-              textAlign: "center",
-            }}
-          >
-            Upload feature coming soon
-          </div>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageUpload}
+          />
+
+          {preview && (
+            <>
+              <img
+                src={preview}
+                alt="Preview"
+                style={{
+                  maxWidth: "100%",
+                  marginTop: "24px",
+                  borderRadius: "16px",
+                }}
+              />
+
+              <div
+                style={{
+                  marginTop: "20px",
+                }}
+              >
+                <select
+                  value={format}
+                  onChange={(e) =>
+                    setFormat(e.target.value)
+                  }
+                  style={{
+                    padding: "14px",
+                    fontSize: "16px",
+                    width: "100%",
+                  }}
+                >
+                  <option value="png">
+                    Convert to PNG
+                  </option>
+                  <option value="jpg">
+                    Convert to JPG
+                  </option>
+                </select>
+
+                <button
+                  onClick={convertImage}
+                  style={{
+                    width: "100%",
+                    marginTop: "14px",
+                    padding: "16px",
+                    borderRadius: "14px",
+                    border: "none",
+                    background: "#00bfa6",
+                    color: "white",
+                    fontWeight: "900",
+                    fontSize: "18px",
+                  }}
+                >
+                  Convert Image
+                </button>
+              </div>
+            </>
+          )}
+
+          {convertedImage && (
+            <>
+              <h2
+                style={{
+                  marginTop: "28px",
+                }}
+              >
+                Converted Image
+              </h2>
+
+              <img
+                src={convertedImage}
+                alt="Converted"
+                style={{
+                  maxWidth: "100%",
+                  borderRadius: "16px",
+                }}
+              />
+
+              <a
+                href={convertedImage}
+                download={`pixelmint-converted.${format}`}
+                style={{
+                  display: "block",
+                  marginTop: "18px",
+                  padding: "16px",
+                  borderRadius: "14px",
+                  background: "#102033",
+                  color: "white",
+                  textAlign: "center",
+                  textDecoration: "none",
+                  fontWeight: "900",
+                }}
+              >
+                Download Image
+              </a>
+
+              <button
+                onClick={shareImage}
+                style={{
+                  width: "100%",
+                  marginTop: "12px",
+                  padding: "16px",
+                  borderRadius: "14px",
+                  border: "none",
+                  background: "#00bfa6",
+                  color: "white",
+                  fontWeight: "900",
+                  fontSize: "18px",
+                }}
+              >
+                Share / Save to Photos
+              </button>
+
+              <button
+                onClick={copyImage}
+                style={{
+                  width: "100%",
+                  marginTop: "12px",
+                  padding: "16px",
+                  borderRadius: "14px",
+                  border: "2px solid #00bfa6",
+                  background: "white",
+                  color: "#04786b",
+                  fontWeight: "900",
+                  fontSize: "18px",
+                }}
+              >
+                Copy Image
+              </button>
+            </>
+          )}
         </div>
       </section>
     </main>
