@@ -62,10 +62,7 @@ export default function Home() {
 
         >
 
-          ✨ Free creator tools
-
-        </div>
-            <div
+    <div
   style={{
     display: "inline-block",
     padding: "8px 14px",
