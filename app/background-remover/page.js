@@ -2,72 +2,47 @@ export default function BackgroundRemoverPage() {
   return (
     <main
       style={{
-        padding: "40px 20px",
-        fontFamily: "Arial, sans-serif",
-        background: "#ecfeff",
         minHeight: "100vh",
+        background:
+          "radial-gradient(circle at top left, #b7fff2 0%, transparent 35%), linear-gradient(135deg, #f0fffb 0%, #e8f7ff 45%, #fff7ed 100%)",
+        padding: "36px 20px",
+        fontFamily:
+          "Avenir Next, Inter, ui-sans-serif, system-ui, sans-serif",
       }}
     >
-      <div
-        style={{
-          maxWidth: "900px",
-          margin: "0 auto",
-          background: "white",
-          padding: "30px",
-          borderRadius: "18px",
-        }}
-      >
+      <section style={{ maxWidth: "900px", margin: "0 auto" }}>
         <a href="/">← Back to tools</a>
 
-        <h1>Free Background Remover</h1>
+        <div style={{ fontSize: "42px", marginTop: "28px" }}>🪄</div>
 
-        <p>
-          Remove image backgrounds online for free. Perfect for Etsy product
-          photos, logos, social media graphics, online stores, and marketing
-          materials.
+        <h1 style={{ fontSize: "56px", fontWeight: "900" }}>
+          Background <span style={{ color: "#00bfa6" }}>Remover</span>
+        </h1>
+
+        <p style={{ fontSize: "22px", color: "#64748b" }}>
+          Remove image backgrounds for product photos, logos, social media, and online shops.
         </p>
 
         <div
           style={{
-            border: "2px dashed #ccc",
-            padding: "40px",
-            margin: "25px 0",
-            borderRadius: "12px",
-            textAlign: "center",
+            background: "white",
+            padding: "30px",
+            borderRadius: "24px",
+            marginTop: "24px",
           }}
         >
-          Upload feature coming soon
+          <div
+            style={{
+              border: "2px dashed #9adfd5",
+              borderRadius: "20px",
+              padding: "40px",
+              textAlign: "center",
+            }}
+          >
+            Upload feature coming soon
+          </div>
         </div>
-
-        <h2>Why remove image backgrounds?</h2>
-
-        <p>
-          Clean background-free images look more professional and help products,
-          logos, and graphics stand out.
-        </p>
-
-        <h2>Popular Uses</h2>
-
-        <ul>
-          <li>Etsy product listings</li>
-          <li>Amazon product photos</li>
-          <li>Shopify stores</li>
-          <li>Business logos</li>
-          <li>Social media graphics</li>
-          <li>Marketing materials</li>
-        </ul>
-
-        <h2>FAQ</h2>
-
-        <h3>Is this background remover free?</h3>
-        <p>Yes. PixelMint Tools is free to use.</p>
-
-        <h3>Will it keep image quality?</h3>
-        <p>
-          Our goal is to remove backgrounds while preserving the original image
-          quality as much as possible.
-        </p>
-      </div>
+      </section>
     </main>
   );
 }
