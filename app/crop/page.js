@@ -1,10 +1,8 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 export default function CropPage() {
-  const canvasRef = useRef(null);
-
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState("");
   const [croppedImage, setCroppedImage] = useState("");
@@ -76,64 +74,50 @@ export default function CropPage() {
 
     const result = canvas.toDataURL("image/png");
 
-    canvasRef.current = canvas;
     setCroppedImage(result);
     setMessage(`${label}: ${targetWidth} × ${targetHeight}`);
     setFileName(`pixelmint-${label.toLowerCase().replaceAll(" ", "-")}.png`);
   }
 
-  function downloadImage() {
+  async function copyImage() {
     if (!croppedImage) {
       alert("Crop an image first.");
       return;
     }
 
-    const link = document.createElement("a");
-    link.href = croppedImage;
-    link.download = fileName;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  }
+    try {
+      const blob = await fetch(croppedImage).then((res) => res.blob());
 
-  async function copyImage() {
-    if (!canvasRef.current) {
-      alert("Crop an image first.");
-      return;
+      await navigator.clipboard.write([
+        new ClipboardItem({ "image/png": blob }),
+      ]);
+
+      alert("Image copied!");
+    } catch {
+      alert("Copy may not work on this browser. Try Share / Save to Photos.");
     }
-
-    canvasRef.current.toBlob(async (blob) => {
-      try {
-        await navigator.clipboard.write([
-          new ClipboardItem({ "image/png": blob }),
-        ]);
-        alert("Image copied!");
-      } catch {
-        alert("Copy may not work on this browser. Try Share / Save to Photos.");
-      }
-    }, "image/png");
   }
 
   async function shareImage() {
-    if (!canvasRef.current) {
+    if (!croppedImage) {
       alert("Crop an image first.");
       return;
     }
 
-    canvasRef.current.toBlob(async (blob) => {
-      const file = new File([blob], fileName, {
-        type: "image/png",
-      });
+    const blob = await fetch(croppedImage).then((res) => res.blob());
 
-      if (navigator.canShare && navigator.canShare({ files: [file] })) {
-        await navigator.share({
-          files: [file],
-          title: "Cropped image",
-        });
-      } else {
-        alert("Sharing is not supported on this browser.");
-      }
-    }, "image/png");
+    const file = new File([blob], fileName, {
+      type: "image/png",
+    });
+
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      await navigator.share({
+        files: [file],
+        title: "Cropped image",
+      });
+    } else {
+      alert("Sharing is not supported on this browser.");
+    }
   }
 
   return (
@@ -162,7 +146,12 @@ export default function CropPage() {
           {preview && (
             <>
               <h2>Original Image</h2>
-              <img src={preview} alt="Original preview" style={{ maxWidth: "100%", borderRadius: "16px" }} />
+
+              <img
+                src={preview}
+                alt="Original preview"
+                style={{ maxWidth: "100%", borderRadius: "16px" }}
+              />
 
               <div style={{ marginTop: "24px", display: "grid", gap: "12px" }}>
                 {presets.map(([label, w, h]) => (
@@ -189,26 +178,32 @@ export default function CropPage() {
           {croppedImage && (
             <>
               <h2 style={{ marginTop: "28px" }}>Cropped Image</h2>
+
               <p style={{ color: "#04786b", fontWeight: "800" }}>{message}</p>
 
-              <img src={croppedImage} alt="Cropped preview" style={{ maxWidth: "100%", borderRadius: "16px" }} />
+              <img
+                src={croppedImage}
+                alt="Cropped preview"
+                style={{ maxWidth: "100%", borderRadius: "16px" }}
+              />
 
-              <button
-                onClick={downloadImage}
+              <a
+                href={croppedImage}
+                download={fileName}
                 style={{
-                  width: "100%",
+                  display: "block",
                   marginTop: "18px",
                   padding: "16px",
                   borderRadius: "14px",
-                  border: "none",
                   background: "#102033",
                   color: "white",
+                  textAlign: "center",
                   fontWeight: "900",
-                  fontSize: "18px",
+                  textDecoration: "none",
                 }}
               >
                 Download Cropped Image
-              </button>
+              </a>
 
               <button
                 onClick={shareImage}
