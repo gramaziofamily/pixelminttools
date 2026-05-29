@@ -86,7 +86,7 @@ letterSpacing: "-2px",
 
           <br />
 
-          <span style={{ color: "#00bfa6" }}>Tools</span>
+          <span style={{ color: "#00bfa6" }}> Tools</span>
 
         </h1>
 
