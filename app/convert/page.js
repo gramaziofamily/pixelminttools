@@ -73,18 +73,30 @@ export default function ConvertPage() {
   async function copyImage() {
     if (!convertedImage) return;
 
-    const blob = await fetch(convertedImage).then((r) => r.blob());
+    const img = new Image();
+    img.src = convertedImage;
 
-    try {
-      await navigator.clipboard.write([
-        new ClipboardItem({
-          [blob.type]: blob,
-        }),
-      ]);
-      alert("Image copied!");
-    } catch {
-      alert("Copy not supported on this browser.");
-    }
+    img.onload = async () => {
+      const canvas = document.createElement("canvas");
+      canvas.width = img.width;
+      canvas.height = img.height;
+
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(img, 0, 0);
+
+      canvas.toBlob(async (blob) => {
+        try {
+          await navigator.clipboard.write([
+            new ClipboardItem({
+              "image/png": blob,
+            }),
+          ]);
+          alert("Image copied!");
+        } catch {
+          alert("Copy may not work on this browser. Try Share / Save to Photos instead.");
+        }
+      }, "image/png");
+    };
   }
 
   return (
