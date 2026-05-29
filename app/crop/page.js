@@ -6,8 +6,6 @@ export default function CropPage() {
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState("");
   const [croppedImage, setCroppedImage] = useState("");
-  const [croppedBlob, setCroppedBlob] = useState(null);
-  const [fileName, setFileName] = useState("pixelmint-cropped-image.png");
   const [message, setMessage] = useState("");
 
   const presets = [
@@ -30,15 +28,10 @@ export default function CropPage() {
       setImage(img);
       setPreview(url);
       setCroppedImage("");
-      setCroppedBlob(null);
       setMessage("");
     };
 
     img.src = url;
-  }
-
-  function makeFileName(label) {
-    return `pixelmint-${label.toLowerCase().replaceAll(" ", "-")}.png`;
   }
 
   function cropToSize(label, targetWidth, targetHeight) {
@@ -78,36 +71,19 @@ export default function CropPage() {
       targetHeight
     );
 
-    const dataUrl = canvas.toDataURL("image/png");
-    setCroppedImage(dataUrl);
-
-    canvas.toBlob((blob) => {
-      setCroppedBlob(blob);
-      setFileName(makeFileName(label));
-      setMessage(`${label}: ${targetWidth} × ${targetHeight}`);
-    }, "image/png");
-  }
-
-  function downloadImage() {
-    if (!croppedBlob) return;
-
-    const url = URL.createObjectURL(croppedBlob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = fileName;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    const result = canvas.toDataURL("image/png");
+    setCroppedImage(result);
+    setMessage(`${label}: ${targetWidth} × ${targetHeight}`);
   }
 
   async function copyImage() {
-    if (!croppedBlob) return;
+    if (!croppedImage) return;
+
+    const blob = await fetch(croppedImage).then((res) => res.blob());
 
     try {
       await navigator.clipboard.write([
-        new ClipboardItem({ "image/png": croppedBlob }),
+        new ClipboardItem({ "image/png": blob }),
       ]);
       alert("Image copied!");
     } catch {
@@ -116,9 +92,10 @@ export default function CropPage() {
   }
 
   async function shareImage() {
-    if (!croppedBlob) return;
+    if (!croppedImage) return;
 
-    const file = new File([croppedBlob], fileName, {
+    const blob = await fetch(croppedImage).then((res) => res.blob());
+    const file = new File([blob], "pixelmint-cropped-image.png", {
       type: "image/png",
     });
 
@@ -133,16 +110,13 @@ export default function CropPage() {
   }
 
   return (
-    <main
-      style={{
-        minHeight: "100vh",
-        background:
-          "radial-gradient(circle at top left, #b7fff2 0%, transparent 35%), linear-gradient(135deg, #f0fffb 0%, #e8f7ff 45%, #fff7ed 100%)",
-        padding: "36px 20px",
-        fontFamily: "Avenir Next, Inter, ui-sans-serif, system-ui, sans-serif",
-        color: "#102033",
-      }}
-    >
+    <main style={{
+      minHeight: "100vh",
+      background: "radial-gradient(circle at top left, #b7fff2 0%, transparent 35%), linear-gradient(135deg, #f0fffb 0%, #e8f7ff 45%, #fff7ed 100%)",
+      padding: "36px 20px",
+      fontFamily: "Avenir Next, Inter, ui-sans-serif, system-ui, sans-serif",
+      color: "#102033",
+    }}>
       <section style={{ maxWidth: "900px", margin: "0 auto" }}>
         <a href="/" style={{ color: "#04786b", fontWeight: "800" }}>
           ← Back to tools
@@ -163,12 +137,7 @@ export default function CropPage() {
           {preview && (
             <>
               <h2>Original Image</h2>
-
-              <img
-                src={preview}
-                alt="Original preview"
-                style={{ maxWidth: "100%", borderRadius: "16px" }}
-              />
+              <img src={preview} alt="Original preview" style={{ maxWidth: "100%", borderRadius: "16px" }} />
 
               <div style={{ marginTop: "24px", display: "grid", gap: "12px" }}>
                 {presets.map(([label, w, h]) => (
@@ -195,31 +164,27 @@ export default function CropPage() {
           {croppedImage && (
             <>
               <h2 style={{ marginTop: "28px" }}>Cropped Image</h2>
-
               <p style={{ color: "#04786b", fontWeight: "800" }}>{message}</p>
 
-              <img
-                src={croppedImage}
-                alt="Cropped preview"
-                style={{ maxWidth: "100%", borderRadius: "16px" }}
-              />
+              <img src={croppedImage} alt="Cropped preview" style={{ maxWidth: "100%", borderRadius: "16px" }} />
 
-              <button
-                onClick={downloadImage}
+              <a
+                href={croppedImage}
+                download="pixelmint-cropped-image.png"
                 style={{
-                  width: "100%",
+                  display: "block",
                   marginTop: "18px",
                   padding: "16px",
                   borderRadius: "14px",
-                  border: "none",
                   background: "#102033",
                   color: "white",
+                  textAlign: "center",
                   fontWeight: "900",
-                  fontSize: "18px",
+                  textDecoration: "none",
                 }}
               >
                 Download Cropped Image
-              </button>
+              </a>
 
               <button
                 onClick={shareImage}
