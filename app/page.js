@@ -7,6 +7,13 @@ export default function Home() {
     ["Background Remover", "/background-remover", "Prepare clean product photos and graphics."],
   ];
 
+  const footerLinks = [
+    ["About", "/about"],
+    ["Privacy Policy", "/privacy-policy"],
+    ["Terms", "/terms"],
+    ["Contact", "/contact"],
+  ];
+
   return (
     <main
       style={{
@@ -34,14 +41,7 @@ export default function Home() {
           ✨ Free creator tools
         </div>
 
-        <div
-          style={{
-            fontSize: "42px",
-            marginBottom: "8px",
-          }}
-        >
-          🌿
-        </div>
+        <div style={{ fontSize: "42px", marginBottom: "8px" }}>🌿</div>
 
         <h1
           style={{
@@ -116,33 +116,39 @@ export default function Home() {
             online shops, social media posts, thumbnails, and digital content.
           </p>
         </div>
-              <footer
-  style={{
-    marginTop: "36px",
-    padding: "24px",
-    textAlign: "center",
-    color: "#516174",
-  }}
->
-  <a href="/about" style={{ margin: "0 10px", color: "#04786b", fontWeight: "800" }}>
-    About
-  </a>
-  <a href="/privacy-policy" style={{ margin: "0 10px", color: "#04786b", fontWeight: "800" }}>
-    Privacy Policy
-  </a>
-  <a
-  href="/terms"
-  style={{
-    color: "#00796b",
-    fontWeight: "800",
-  }}
->
-  Terms
-</a>
-      <a href="/contact" style={{ margin: "0 10px", color: "#04786b", fontWeight: "800" }}>
-    Contact
-  </a>
-</footer>
+
+        <footer
+          style={{
+            marginTop: "36px",
+            padding: "24px 8px",
+            textAlign: "center",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              gap: "12px",
+              flexWrap: "wrap",
+            }}
+          >
+            {footerLinks.map(([title, link]) => (
+              <a
+                key={title}
+                href={link}
+                style={{
+                  color: "#04786b",
+                  fontWeight: "800",
+                  fontSize: "14px",
+                  textDecoration: "underline",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {title}
+              </a>
+            ))}
+          </div>
+        </footer>
       </section>
     </main>
   );
