@@ -12,13 +12,13 @@ export default function AboutPage() {
 
         <h1
   style={{
-    fontSize: "52px",
+    fontSize: "42px",
     fontWeight: "900",
     marginTop: "28px",
     lineHeight: "1.05",
   }}
 >
-  About <span style={{ color: "#00bfa6" }}>PixelMint</span>
+  About <span style={{ color: "#00bfa6" }}>PixelMint Tools</span>
 </h1>
 
         <div style={{
