@@ -130,7 +130,8 @@ export default function Home() {
   <a href="/privacy-policy" style={{ margin: "0 10px", color: "#04786b", fontWeight: "800" }}>
     Privacy Policy
   </a>
-  <a href="/contact" style={{ margin: "0 10px", color: "#04786b", fontWeight: "800" }}>
+  <a href="/terms">Terms</a>
+      <a href="/contact" style={{ margin: "0 10px", color: "#04786b", fontWeight: "800" }}>
     Contact
   </a>
 </footer>
