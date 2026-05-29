@@ -65,8 +65,31 @@ export default function Home() {
           ✨ Free creator tools
 
         </div>
+            <div
+  style={{
+    display: "inline-block",
+    padding: "8px 14px",
+    borderRadius: "999px",
+    background: "#d9fff7",
+    color: "#04786b",
+    fontWeight: "800",
+    marginBottom: "22px",
+  }}
+>
+  ✨ Free creator tools
+</div>
 
-        <h1
+<div
+  style={{
+    fontSize: "52px",
+    marginBottom: "12px",
+  }}
+>
+  🌿
+</div>
+
+
+         <h1
 
           style={{
 
@@ -103,7 +126,7 @@ letterSpacing: "-2px",
 
             maxWidth: "720px",
 
-            marginBottom: "34px",
+            marginBottom: "24px",
 
           }}
 
@@ -139,7 +162,7 @@ letterSpacing: "-2px",
 
                 display: "block",
 
-                padding: "24px",
+                padding: "20px",
 
                 borderRadius: "24px",
 
