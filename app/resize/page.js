@@ -39,9 +39,11 @@ export default function ResizePage() {
     const ctx = canvas.getContext("2d");
     ctx.drawImage(image, 0, 0, Number(width), Number(height));
 
-    const resizedUrl = canvas.toDataURL("image/png");
-    setResizedPreview(resizedUrl);
-    setMessage(`Image resized to ${width} × ${height}`);
+    canvas.toBlob((blob) => {
+      const resizedUrl = URL.createObjectURL(blob);
+      setResizedPreview(resizedUrl);
+      setMessage(`Image resized to ${width} × ${height}`);
+    }, "image/png");
   }
 
   function downloadImage() {
@@ -62,9 +64,7 @@ export default function ResizePage() {
 
     try {
       await navigator.clipboard.write([
-        new ClipboardItem({
-          "image/png": blob,
-        }),
+        new ClipboardItem({ "image/png": blob }),
       ]);
       alert("Image copied!");
     } catch {
@@ -76,17 +76,11 @@ export default function ResizePage() {
     if (!resizedPreview) return;
 
     const blob = await fetch(resizedPreview).then((res) => res.blob());
+    const file = new File([blob], "pixelmint-resized-image.png", {
+      type: "image/png",
+    });
 
-    const file = new File(
-      [blob],
-      "pixelmint-resized-image.png",
-      { type: "image/png" }
-    );
-
-    if (
-      navigator.canShare &&
-      navigator.canShare({ files: [file] })
-    ) {
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
       await navigator.share({
         files: [file],
         title: "Resized image",
@@ -108,33 +102,13 @@ export default function ResizePage() {
         color: "#102033",
       }}
     >
-      <section
-        style={{
-          maxWidth: "900px",
-          margin: "0 auto",
-        }}
-      >
-        <a
-          href="/"
-          style={{
-            color: "#04786b",
-            fontWeight: "800",
-          }}
-        >
+      <section style={{ maxWidth: "900px", margin: "0 auto" }}>
+        <a href="/" style={{ color: "#04786b", fontWeight: "800" }}>
           ← Back to tools
         </a>
 
-        <h1
-          style={{
-            fontSize: "42px",
-            fontWeight: "900",
-            marginTop: "28px",
-          }}
-        >
-          Free Image{" "}
-          <span style={{ color: "#00bfa6" }}>
-            Resizer
-          </span>
+        <h1 style={{ fontSize: "42px", fontWeight: "900", marginTop: "28px" }}>
+          Free Image <span style={{ color: "#00bfa6" }}>Resizer</span>
         </h1>
 
         <div
@@ -144,11 +118,7 @@ export default function ResizePage() {
             padding: "28px",
           }}
         >
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleImageUpload}
-          />
+          <input type="file" accept="image/*" onChange={handleImageUpload} />
 
           {preview && (
             <>
@@ -173,27 +143,17 @@ export default function ResizePage() {
                 <input
                   type="number"
                   value={width}
-                  onChange={(e) =>
-                    setWidth(e.target.value)
-                  }
+                  onChange={(e) => setWidth(e.target.value)}
                   placeholder="Width"
-                  style={{
-                    padding: "14px",
-                    fontSize: "16px",
-                  }}
+                  style={{ padding: "14px", fontSize: "16px" }}
                 />
 
                 <input
                   type="number"
                   value={height}
-                  onChange={(e) =>
-                    setHeight(e.target.value)
-                  }
+                  onChange={(e) => setHeight(e.target.value)}
                   placeholder="Height"
-                  style={{
-                    padding: "14px",
-                    fontSize: "16px",
-                  }}
+                  style={{ padding: "14px", fontSize: "16px" }}
                 />
 
                 <button
@@ -216,18 +176,9 @@ export default function ResizePage() {
 
           {resizedPreview && (
             <>
-              <h2 style={{ marginTop: "28px" }}>
-                Resized Image
-              </h2>
+              <h2 style={{ marginTop: "28px" }}>Resized Image</h2>
 
-              <p
-                style={{
-                  color: "#04786b",
-                  fontWeight: "800",
-                }}
-              >
-                {message}
-              </p>
+              <p style={{ color: "#04786b", fontWeight: "800" }}>{message}</p>
 
               <img
                 src={resizedPreview}
