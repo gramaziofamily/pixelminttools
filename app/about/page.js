@@ -10,9 +10,16 @@ export default function AboutPage() {
       <section style={{ maxWidth: "900px", margin: "0 auto" }}>
         <a href="/" style={{ color: "#04786b", fontWeight: "800" }}>← Back to Home</a>
 
-        <h1 style={{ fontSize: "52px", fontWeight: "900", marginTop: "28px" }}>
-          About <span style={{ color: "#00bfa6" }}>PixelMint</span>
-        </h1>
+        <h1
+  style={{
+    fontSize: "52px",
+    fontWeight: "900",
+    marginTop: "28px",
+    lineHeight: "1.05",
+  }}
+>
+  About <span style={{ color: "#00bfa6" }}>PixelMint</span>
+</h1>
 
         <div style={{
           background: "rgba(255,255,255,0.92)",
