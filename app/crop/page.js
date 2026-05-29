@@ -6,8 +6,10 @@ export default function CropPage() {
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState("");
   const [croppedImage, setCroppedImage] = useState("");
+  const [downloadUrl, setDownloadUrl] = useState("");
   const [message, setMessage] = useState("");
   const [fileName, setFileName] = useState("pixelmint-cropped-image.png");
+  const [lastCrop, setLastCrop] = useState(null);
 
   const presets = [
     ["Instagram Post", 1080, 1080],
@@ -29,15 +31,15 @@ export default function CropPage() {
       setImage(img);
       setPreview(url);
       setCroppedImage("");
+      setDownloadUrl("");
       setMessage("");
+      setLastCrop(null);
     };
 
     img.src = url;
   }
 
-  function cropToSize(label, targetWidth, targetHeight) {
-    if (!image) return;
-
+  function makeCanvas(targetWidth, targetHeight) {
     const canvas = document.createElement("canvas");
     canvas.width = targetWidth;
     canvas.height = targetHeight;
@@ -72,24 +74,44 @@ export default function CropPage() {
       targetHeight
     );
 
-    const result = canvas.toDataURL("image/png");
+    return canvas;
+  }
 
-    setCroppedImage(result);
-    setMessage(`${label}: ${targetWidth} × ${targetHeight}`);
-    setFileName(`pixelmint-${label.toLowerCase().replaceAll(" ", "-")}.png`);
+  function cropToSize(label, targetWidth, targetHeight) {
+    if (!image) return;
+
+    const canvas = makeCanvas(targetWidth, targetHeight);
+    const dataUrl = canvas.toDataURL("image/png");
+    const name = `pixelmint-${label.toLowerCase().replaceAll(" ", "-")}.png`;
+
+    canvas.toBlob((blob) => {
+      const blobUrl = URL.createObjectURL(blob);
+
+      setCroppedImage(dataUrl);
+      setDownloadUrl(blobUrl);
+      setFileName(name);
+      setMessage(`${label}: ${targetWidth} × ${targetHeight}`);
+      setLastCrop({ label, targetWidth, targetHeight });
+    }, "image/png");
   }
 
   async function copyImage() {
-    if (!croppedImage) {
+    if (!image || !lastCrop) {
       alert("Crop an image first.");
       return;
     }
 
     try {
-      const blob = await fetch(croppedImage).then((res) => res.blob());
+      const canvas = makeCanvas(lastCrop.targetWidth, lastCrop.targetHeight);
+
+      const blobPromise = new Promise((resolve) => {
+        canvas.toBlob((blob) => resolve(blob), "image/png");
+      });
 
       await navigator.clipboard.write([
-        new ClipboardItem({ "image/png": blob }),
+        new ClipboardItem({
+          "image/png": blobPromise,
+        }),
       ]);
 
       alert("Image copied!");
@@ -99,25 +121,27 @@ export default function CropPage() {
   }
 
   async function shareImage() {
-    if (!croppedImage) {
+    if (!image || !lastCrop) {
       alert("Crop an image first.");
       return;
     }
 
-    const blob = await fetch(croppedImage).then((res) => res.blob());
+    const canvas = makeCanvas(lastCrop.targetWidth, lastCrop.targetHeight);
 
-    const file = new File([blob], fileName, {
-      type: "image/png",
-    });
-
-    if (navigator.canShare && navigator.canShare({ files: [file] })) {
-      await navigator.share({
-        files: [file],
-        title: "Cropped image",
+    canvas.toBlob(async (blob) => {
+      const file = new File([blob], fileName, {
+        type: "image/png",
       });
-    } else {
-      alert("Sharing is not supported on this browser.");
-    }
+
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({
+          files: [file],
+          title: "Cropped image",
+        });
+      } else {
+        alert("Sharing is not supported on this browser.");
+      }
+    }, "image/png");
   }
 
   return (
@@ -188,7 +212,7 @@ export default function CropPage() {
               />
 
               <a
-                href={croppedImage}
+                href={downloadUrl}
                 download={fileName}
                 style={{
                   display: "block",
