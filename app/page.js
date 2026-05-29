@@ -1,90 +1,223 @@
 export default function Home() {
+
+  const tools = [
+
+    ["Image Resizer", "/resize", "Resize images for social media, websites, and shops."],
+
+    ["Image Compressor", "/compress", "Make image files smaller and faster to upload."],
+
+    ["JPG / PNG Converter", "/convert", "Convert image formats for free."],
+
+    ["Social Media Image Cropper", "/crop", "Crop images for Instagram, Pinterest, YouTube, and more."],
+
+    ["Background Remover", "/background-remover", "Prepare clean product photos and graphics."],
+
+  ];
+
   return (
+
     <main
+
       style={{
+
         minHeight: "100vh",
-        background: "linear-gradient(135deg, #f8fafc, #ecfeff)",
-        padding: "40px 20px",
+
+        background:
+
+          "radial-gradient(circle at top left, #b7fff2 0%, transparent 35%), linear-gradient(135deg, #f0fffb 0%, #e8f7ff 45%, #fff7ed 100%)",
+
+        padding: "36px 20px",
+
         fontFamily:
-          "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
+
+          "Avenir Next, Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif",
+
+        color: "#102033",
+
       }}
+
     >
-      <div
-        style={{
-          maxWidth: "900px",
-          margin: "0 auto",
-        }}
-      >
-        <h1
+
+      <section style={{ maxWidth: "980px", margin: "0 auto" }}>
+
+        <div
+
           style={{
-            fontSize: "3rem",
+
+            display: "inline-block",
+
+            padding: "8px 14px",
+
+            borderRadius: "999px",
+
+            background: "#d9fff7",
+
+            color: "#04786b",
+
             fontWeight: "800",
-            marginBottom: "10px",
-            color: "#111827",
+
+            marginBottom: "22px",
+
           }}
+
         >
-          PixelMint Tools
+
+          ✨ Free creator tools
+
+        </div>
+
+        <h1
+
+          style={{
+
+            fontSize: "clamp(48px, 11vw, 90px)",
+
+            lineHeight: "0.95",
+
+            letterSpacing: "-4px",
+
+            margin: "0 0 18px",
+
+            fontWeight: "900",
+
+          }}
+
+        >
+
+          PixelMint
+
+          <br />
+
+          <span style={{ color: "#00bfa6" }}>Tools</span>
+
         </h1>
 
         <p
+
           style={{
-            fontSize: "1.2rem",
-            color: "#4b5563",
-            marginBottom: "40px",
+
+            fontSize: "22px",
+
+            lineHeight: "1.4",
+
+            color: "#516174",
+
+            maxWidth: "720px",
+
+            marginBottom: "34px",
+
           }}
+
         >
-          Free image tools. No signup. No watermarks.
+
+          Free image tools for creators, Etsy sellers, bloggers, and small
+
+          businesses. No signup. No watermarks.
+
         </p>
 
         <div
+
           style={{
+
             display: "grid",
-            gap: "16px",
+
+            gap: "18px",
+
           }}
+
         >
-          {[
-            ["Image Resizer", "/resize"],
-            ["Image Compressor", "/compress"],
-            ["JPG / PNG Converter", "/convert"],
-            ["Social Media Image Cropper", "/crop"],
-            ["Background Remover", "/background-remover"],
-          ].map(([title, link]) => (
+
+          {tools.map(([title, link, desc]) => (
+
             <a
+
               key={title}
+
               href={link}
+
               style={{
+
                 display: "block",
-                padding: "20px",
-                background: "#ffffff",
-                borderRadius: "16px",
+
+                padding: "24px",
+
+                borderRadius: "24px",
+
+                background: "rgba(255,255,255,0.92)",
+
                 textDecoration: "none",
-                color: "#111827",
-                fontWeight: "600",
-                boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
-                border: "1px solid #e5e7eb",
+
+                color: "#102033",
+
+                boxShadow: "0 18px 45px rgba(15, 79, 88, 0.12)",
+
+                border: "1px solid rgba(0,191,166,0.18)",
+
               }}
+
             >
-              {title}
+
+              <div style={{ fontSize: "26px", fontWeight: "900" }}>{title}</div>
+
+              <div
+
+                style={{
+
+                  marginTop: "8px",
+
+                  color: "#64748b",
+
+                  fontSize: "16px",
+
+                  lineHeight: "1.4",
+
+                }}
+
+              >
+
+                {desc}
+
+              </div>
+
             </a>
+
           ))}
+
         </div>
 
         <div
+
           style={{
-            marginTop: "50px",
-            padding: "24px",
-            background: "#ffffff",
-            borderRadius: "16px",
-            border: "1px solid #e5e7eb",
+
+            marginTop: "42px",
+
+            padding: "28px",
+
+            background: "rgba(255,255,255,0.9)",
+
+            borderRadius: "24px",
+
+            border: "1px solid rgba(0,191,166,0.18)",
+
           }}
+
         >
-          <h2>Why PixelMint?</h2>
-          <p>
-            Fast, simple image tools designed for creators, bloggers,
-            Etsy sellers, Pinterest users, and small businesses.
+
+          <h2 style={{ fontSize: "32px", marginTop: 0 }}>Why PixelMint?</h2>
+
+          <p style={{ fontSize: "18px", lineHeight: "1.6", color: "#516174" }}>
+
+            PixelMint Tools helps you quickly prepare images for websites,
+
+            online shops, social media posts, thumbnails, and digital content.
+
           </p>
+
         </div>
-      </div>
+
+      </section>
+
     </main>
-  );
-}
+
+  )
