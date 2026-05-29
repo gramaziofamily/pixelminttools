@@ -11,11 +11,8 @@ export default function ContactPage() {
       }}
     >
       <section style={{ maxWidth: "900px", margin: "0 auto" }}>
-        <a
-          href="/"
-          style={{ color: "#04786b", fontWeight: "800" }}
-        >
-          ← Back to Home
+        <a href="/" style={{ color: "#04786b", fontWeight: "800" }}>
+          Back to Home
         </a>
 
         <h1
@@ -26,7 +23,7 @@ export default function ContactPage() {
             lineHeight: "1.05",
           }}
         >
-          Contact <span style={{ color: "#00bfa6" }}>PixelMint</span>
+          Contact PixelMint
         </h1>
 
         <div
@@ -43,17 +40,7 @@ export default function ContactPage() {
           </p>
 
           <p style={{ fontSize: "18px", lineHeight: "1.8", color: "#516174" }}>
-            You can reach us at:
-          </p>
-
-          <p
-            style={{
-              fontSize: "22px",
-              fontWeight: "800",
-              color: "#00bfa6",
-            }}
-          >
-            hello@pixelminttools.com
+            You can reach us at hello@pixelminttools.com.
           </p>
 
           <p style={{ fontSize: "18px", lineHeight: "1.8", color: "#516174" }}>
