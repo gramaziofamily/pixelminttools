@@ -116,6 +116,24 @@ export default function Home() {
             online shops, social media posts, thumbnails, and digital content.
           </p>
         </div>
+              <footer
+  style={{
+    marginTop: "36px",
+    padding: "24px",
+    textAlign: "center",
+    color: "#516174",
+  }}
+>
+  <a href="/about" style={{ margin: "0 10px", color: "#04786b", fontWeight: "800" }}>
+    About
+  </a>
+  <a href="/privacy-policy" style={{ margin: "0 10px", color: "#04786b", fontWeight: "800" }}>
+    Privacy Policy
+  </a>
+  <a href="/contact" style={{ margin: "0 10px", color: "#04786b", fontWeight: "800" }}>
+    Contact
+  </a>
+</footer>
       </section>
     </main>
   );
