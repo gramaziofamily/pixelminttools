@@ -44,6 +44,17 @@ export default function ResizePage() {
     setMessage(`Image resized to ${width} × ${height}`);
   }
 
+  function downloadImage() {
+    if (!resizedPreview) return;
+
+    const link = document.createElement("a");
+    link.href = resizedPreview;
+    link.download = "pixelmint-resized-image.png";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
   async function copyImage() {
     if (!resizedPreview) return;
 
@@ -51,11 +62,13 @@ export default function ResizePage() {
 
     try {
       await navigator.clipboard.write([
-        new ClipboardItem({ "image/png": blob }),
+        new ClipboardItem({
+          "image/png": blob,
+        }),
       ]);
       alert("Image copied!");
     } catch {
-      alert("Copy may not work on this browser. Try Download or Share instead.");
+      alert("Copy may not work on this browser.");
     }
   }
 
@@ -63,17 +76,23 @@ export default function ResizePage() {
     if (!resizedPreview) return;
 
     const blob = await fetch(resizedPreview).then((res) => res.blob());
-    const file = new File([blob], "pixelmint-resized-image.png", {
-      type: "image/png",
-    });
 
-    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+    const file = new File(
+      [blob],
+      "pixelmint-resized-image.png",
+      { type: "image/png" }
+    );
+
+    if (
+      navigator.canShare &&
+      navigator.canShare({ files: [file] })
+    ) {
       await navigator.share({
         files: [file],
         title: "Resized image",
       });
     } else {
-      alert("Sharing is not supported on this browser. Use Download instead.");
+      alert("Sharing is not supported on this browser.");
     }
   }
 
@@ -84,32 +103,111 @@ export default function ResizePage() {
         background:
           "radial-gradient(circle at top left, #b7fff2 0%, transparent 35%), linear-gradient(135deg, #f0fffb 0%, #e8f7ff 45%, #fff7ed 100%)",
         padding: "36px 20px",
-        fontFamily: "Avenir Next, Inter, ui-sans-serif, system-ui, sans-serif",
+        fontFamily:
+          "Avenir Next, Inter, ui-sans-serif, system-ui, sans-serif",
         color: "#102033",
       }}
     >
-      <section style={{ maxWidth: "900px", margin: "0 auto" }}>
-        <a href="/" style={{ color: "#04786b", fontWeight: "800" }}>
+      <section
+        style={{
+          maxWidth: "900px",
+          margin: "0 auto",
+        }}
+      >
+        <a
+          href="/"
+          style={{
+            color: "#04786b",
+            fontWeight: "800",
+          }}
+        >
           ← Back to tools
         </a>
 
-        <h1 style={{ fontSize: "42px", fontWeight: "900", marginTop: "28px" }}>
-          Free Image <span style={{ color: "#00bfa6" }}>Resizer</span>
+        <h1
+          style={{
+            fontSize: "42px",
+            fontWeight: "900",
+            marginTop: "28px",
+          }}
+        >
+          Free Image{" "}
+          <span style={{ color: "#00bfa6" }}>
+            Resizer
+          </span>
         </h1>
 
-        <div style={{ background: "white", borderRadius: "24px", padding: "28px" }}>
-          <input type="file" accept="image/*" onChange={handleImageUpload} />
+        <div
+          style={{
+            background: "white",
+            borderRadius: "24px",
+            padding: "28px",
+          }}
+        >
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageUpload}
+          />
 
           {preview && (
             <>
               <h2>Original Image</h2>
-              <img src={preview} alt="Original preview" style={{ maxWidth: "100%", borderRadius: "16px" }} />
 
-              <div style={{ marginTop: "24px", display: "grid", gap: "12px" }}>
-                <input type="number" value={width} onChange={(e) => setWidth(e.target.value)} placeholder="Width" style={{ padding: "14px", fontSize: "16px" }} />
-                <input type="number" value={height} onChange={(e) => setHeight(e.target.value)} placeholder="Height" style={{ padding: "14px", fontSize: "16px" }} />
+              <img
+                src={preview}
+                alt="Original preview"
+                style={{
+                  maxWidth: "100%",
+                  borderRadius: "16px",
+                }}
+              />
 
-                <button onClick={resizeImage} style={{ padding: "16px", borderRadius: "14px", border: "none", background: "#00bfa6", color: "white", fontWeight: "900", fontSize: "18px" }}>
+              <div
+                style={{
+                  marginTop: "24px",
+                  display: "grid",
+                  gap: "12px",
+                }}
+              >
+                <input
+                  type="number"
+                  value={width}
+                  onChange={(e) =>
+                    setWidth(e.target.value)
+                  }
+                  placeholder="Width"
+                  style={{
+                    padding: "14px",
+                    fontSize: "16px",
+                  }}
+                />
+
+                <input
+                  type="number"
+                  value={height}
+                  onChange={(e) =>
+                    setHeight(e.target.value)
+                  }
+                  placeholder="Height"
+                  style={{
+                    padding: "14px",
+                    fontSize: "16px",
+                  }}
+                />
+
+                <button
+                  onClick={resizeImage}
+                  style={{
+                    padding: "16px",
+                    borderRadius: "14px",
+                    border: "none",
+                    background: "#00bfa6",
+                    color: "white",
+                    fontWeight: "900",
+                    fontSize: "18px",
+                  }}
+                >
                   Resize Image
                 </button>
               </div>
@@ -118,20 +216,76 @@ export default function ResizePage() {
 
           {resizedPreview && (
             <>
-              <h2 style={{ marginTop: "28px" }}>Resized Image</h2>
-              <p style={{ color: "#04786b", fontWeight: "800" }}>{message}</p>
+              <h2 style={{ marginTop: "28px" }}>
+                Resized Image
+              </h2>
 
-              <img src={resizedPreview} alt="Resized preview" style={{ maxWidth: "100%", borderRadius: "16px" }} />
+              <p
+                style={{
+                  color: "#04786b",
+                  fontWeight: "800",
+                }}
+              >
+                {message}
+              </p>
 
-              <a href={resizedPreview} download="pixelmint-resized-image.png" style={{ display: "block", marginTop: "18px", padding: "16px", borderRadius: "14px", background: "#102033", color: "white", textAlign: "center", fontWeight: "900", textDecoration: "none" }}>
+              <img
+                src={resizedPreview}
+                alt="Resized preview"
+                style={{
+                  maxWidth: "100%",
+                  borderRadius: "16px",
+                }}
+              />
+
+              <button
+                onClick={downloadImage}
+                style={{
+                  width: "100%",
+                  marginTop: "18px",
+                  padding: "16px",
+                  borderRadius: "14px",
+                  border: "none",
+                  background: "#102033",
+                  color: "white",
+                  fontWeight: "900",
+                  fontSize: "18px",
+                }}
+              >
                 Download Resized Image
-              </a>
+              </button>
 
-              <button onClick={shareImage} style={{ width: "100%", marginTop: "12px", padding: "16px", borderRadius: "14px", border: "none", background: "#00bfa6", color: "white", fontWeight: "900", fontSize: "18px" }}>
+              <button
+                onClick={shareImage}
+                style={{
+                  width: "100%",
+                  marginTop: "12px",
+                  padding: "16px",
+                  borderRadius: "14px",
+                  border: "none",
+                  background: "#00bfa6",
+                  color: "white",
+                  fontWeight: "900",
+                  fontSize: "18px",
+                }}
+              >
                 Share / Save to Photos
               </button>
 
-              <button onClick={copyImage} style={{ width: "100%", marginTop: "12px", padding: "16px", borderRadius: "14px", border: "2px solid #00bfa6", background: "white", color: "#04786b", fontWeight: "900", fontSize: "18px" }}>
+              <button
+                onClick={copyImage}
+                style={{
+                  width: "100%",
+                  marginTop: "12px",
+                  padding: "16px",
+                  borderRadius: "14px",
+                  border: "2px solid #00bfa6",
+                  background: "white",
+                  color: "#04786b",
+                  fontWeight: "900",
+                  fontSize: "18px",
+                }}
+              >
                 Copy Image
               </button>
             </>
