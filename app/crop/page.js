@@ -1,12 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 export default function CropPage() {
+  const canvasRef = useRef(null);
+
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState("");
   const [croppedImage, setCroppedImage] = useState("");
   const [message, setMessage] = useState("");
+  const [fileName, setFileName] = useState("pixelmint-cropped-image.png");
 
   const presets = [
     ["Instagram Post", 1080, 1080],
@@ -72,51 +75,78 @@ export default function CropPage() {
     );
 
     const result = canvas.toDataURL("image/png");
+
+    canvasRef.current = canvas;
     setCroppedImage(result);
     setMessage(`${label}: ${targetWidth} × ${targetHeight}`);
+    setFileName(`pixelmint-${label.toLowerCase().replaceAll(" ", "-")}.png`);
+  }
+
+  function downloadImage() {
+    if (!croppedImage) {
+      alert("Crop an image first.");
+      return;
+    }
+
+    const link = document.createElement("a");
+    link.href = croppedImage;
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   }
 
   async function copyImage() {
-    if (!croppedImage) return;
-
-    const blob = await fetch(croppedImage).then((res) => res.blob());
-
-    try {
-      await navigator.clipboard.write([
-        new ClipboardItem({ "image/png": blob }),
-      ]);
-      alert("Image copied!");
-    } catch {
-      alert("Copy may not work on this browser. Try Share / Save to Photos.");
+    if (!canvasRef.current) {
+      alert("Crop an image first.");
+      return;
     }
+
+    canvasRef.current.toBlob(async (blob) => {
+      try {
+        await navigator.clipboard.write([
+          new ClipboardItem({ "image/png": blob }),
+        ]);
+        alert("Image copied!");
+      } catch {
+        alert("Copy may not work on this browser. Try Share / Save to Photos.");
+      }
+    }, "image/png");
   }
 
   async function shareImage() {
-    if (!croppedImage) return;
-
-    const blob = await fetch(croppedImage).then((res) => res.blob());
-    const file = new File([blob], "pixelmint-cropped-image.png", {
-      type: "image/png",
-    });
-
-    if (navigator.canShare && navigator.canShare({ files: [file] })) {
-      await navigator.share({
-        files: [file],
-        title: "Cropped image",
-      });
-    } else {
-      alert("Sharing is not supported on this browser.");
+    if (!canvasRef.current) {
+      alert("Crop an image first.");
+      return;
     }
+
+    canvasRef.current.toBlob(async (blob) => {
+      const file = new File([blob], fileName, {
+        type: "image/png",
+      });
+
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({
+          files: [file],
+          title: "Cropped image",
+        });
+      } else {
+        alert("Sharing is not supported on this browser.");
+      }
+    }, "image/png");
   }
 
   return (
-    <main style={{
-      minHeight: "100vh",
-      background: "radial-gradient(circle at top left, #b7fff2 0%, transparent 35%), linear-gradient(135deg, #f0fffb 0%, #e8f7ff 45%, #fff7ed 100%)",
-      padding: "36px 20px",
-      fontFamily: "Avenir Next, Inter, ui-sans-serif, system-ui, sans-serif",
-      color: "#102033",
-    }}>
+    <main
+      style={{
+        minHeight: "100vh",
+        background:
+          "radial-gradient(circle at top left, #b7fff2 0%, transparent 35%), linear-gradient(135deg, #f0fffb 0%, #e8f7ff 45%, #fff7ed 100%)",
+        padding: "36px 20px",
+        fontFamily: "Avenir Next, Inter, ui-sans-serif, system-ui, sans-serif",
+        color: "#102033",
+      }}
+    >
       <section style={{ maxWidth: "900px", margin: "0 auto" }}>
         <a href="/" style={{ color: "#04786b", fontWeight: "800" }}>
           ← Back to tools
@@ -125,11 +155,6 @@ export default function CropPage() {
         <h1 style={{ fontSize: "42px", fontWeight: "900", marginTop: "28px" }}>
           Social Media <span style={{ color: "#00bfa6" }}>Cropper</span>
         </h1>
-
-        <p style={{ color: "#516174", fontSize: "18px", lineHeight: "1.6" }}>
-          Crop images into popular social media sizes for Instagram, Pinterest,
-          YouTube, Facebook, and profile pictures.
-        </p>
 
         <div style={{ background: "white", borderRadius: "24px", padding: "28px" }}>
           <input type="file" accept="image/*" onChange={handleImageUpload} />
@@ -168,23 +193,22 @@ export default function CropPage() {
 
               <img src={croppedImage} alt="Cropped preview" style={{ maxWidth: "100%", borderRadius: "16px" }} />
 
-              <a
-                href={croppedImage}
-                download="pixelmint-cropped-image.png"
+              <button
+                onClick={downloadImage}
                 style={{
-                  display: "block",
+                  width: "100%",
                   marginTop: "18px",
                   padding: "16px",
                   borderRadius: "14px",
+                  border: "none",
                   background: "#102033",
                   color: "white",
-                  textAlign: "center",
                   fontWeight: "900",
-                  textDecoration: "none",
+                  fontSize: "18px",
                 }}
               >
                 Download Cropped Image
-              </a>
+              </button>
 
               <button
                 onClick={shareImage}
