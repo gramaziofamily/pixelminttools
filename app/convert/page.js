@@ -32,31 +32,41 @@ export default function ConvertPage() {
     canvas.height = image.height;
 
     const ctx = canvas.getContext("2d");
+
+    if (format === "jpg") {
+      ctx.fillStyle = "white";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+
     ctx.drawImage(image, 0, 0);
 
-    const mimeType =
-      format === "png" ? "image/png" : "image/jpeg";
+    const mimeType = format === "png" ? "image/png" : "image/jpeg";
 
-    const result = canvas.toDataURL(mimeType);
-    setConvertedImage(result);
+    canvas.toBlob(
+      (blob) => {
+        const result = URL.createObjectURL(blob);
+        setConvertedImage(result);
+      },
+      mimeType,
+      0.95
+    );
   }
 
   async function shareImage() {
     if (!convertedImage) return;
 
     const blob = await fetch(convertedImage).then((r) => r.blob());
-
-    const file = new File(
-      [blob],
-      `pixelmint-converted.${format}`,
-      { type: blob.type }
-    );
+    const file = new File([blob], `pixelmint-converted.${format}`, {
+      type: blob.type,
+    });
 
     if (navigator.canShare?.({ files: [file] })) {
       await navigator.share({
         files: [file],
         title: "Converted Image",
       });
+    } else {
+      alert("Sharing is not supported on this browser.");
     }
   }
 
@@ -71,7 +81,6 @@ export default function ConvertPage() {
           [blob.type]: blob,
         }),
       ]);
-
       alert("Image copied!");
     } catch {
       alert("Copy not supported on this browser.");
@@ -85,37 +94,16 @@ export default function ConvertPage() {
         background:
           "radial-gradient(circle at top left, #b7fff2 0%, transparent 35%), linear-gradient(135deg, #f0fffb 0%, #e8f7ff 45%, #fff7ed 100%)",
         padding: "36px 20px",
-        fontFamily:
-          "Avenir Next, Inter, ui-sans-serif, system-ui, sans-serif",
+        fontFamily: "Avenir Next, Inter, ui-sans-serif, system-ui, sans-serif",
       }}
     >
-      <section
-        style={{
-          maxWidth: "900px",
-          margin: "0 auto",
-        }}
-      >
-        <a
-          href="/"
-          style={{
-            color: "#04786b",
-            fontWeight: "800",
-          }}
-        >
+      <section style={{ maxWidth: "900px", margin: "0 auto" }}>
+        <a href="/" style={{ color: "#04786b", fontWeight: "800" }}>
           ← Back to Home
         </a>
 
-        <h1
-          style={{
-            fontSize: "42px",
-            fontWeight: "900",
-            marginTop: "28px",
-          }}
-        >
-          JPG / PNG{" "}
-          <span style={{ color: "#00bfa6" }}>
-            Converter
-          </span>
+        <h1 style={{ fontSize: "42px", fontWeight: "900", marginTop: "28px" }}>
+          JPG / PNG <span style={{ color: "#00bfa6" }}>Converter</span>
         </h1>
 
         <div
@@ -123,15 +111,10 @@ export default function ConvertPage() {
             background: "white",
             borderRadius: "24px",
             padding: "28px",
-            boxShadow:
-              "0 18px 45px rgba(15,79,88,0.12)",
+            boxShadow: "0 18px 45px rgba(15,79,88,0.12)",
           }}
         >
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleImageUpload}
-          />
+          <input type="file" accept="image/*" onChange={handleImageUpload} />
 
           {preview && (
             <>
@@ -145,28 +128,18 @@ export default function ConvertPage() {
                 }}
               />
 
-              <div
-                style={{
-                  marginTop: "20px",
-                }}
-              >
+              <div style={{ marginTop: "20px" }}>
                 <select
                   value={format}
-                  onChange={(e) =>
-                    setFormat(e.target.value)
-                  }
+                  onChange={(e) => setFormat(e.target.value)}
                   style={{
                     padding: "14px",
                     fontSize: "16px",
                     width: "100%",
                   }}
                 >
-                  <option value="png">
-                    Convert to PNG
-                  </option>
-                  <option value="jpg">
-                    Convert to JPG
-                  </option>
+                  <option value="png">Convert to PNG</option>
+                  <option value="jpg">Convert to JPG</option>
                 </select>
 
                 <button
@@ -191,13 +164,7 @@ export default function ConvertPage() {
 
           {convertedImage && (
             <>
-              <h2
-                style={{
-                  marginTop: "28px",
-                }}
-              >
-                Converted Image
-              </h2>
+              <h2 style={{ marginTop: "28px" }}>Converted Image</h2>
 
               <img
                 src={convertedImage}
