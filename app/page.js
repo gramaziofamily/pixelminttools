@@ -62,30 +62,28 @@ export default function Home() {
 
         >
 
-    <div
+  <div
   style={{
-    display: "inline-block",
-    padding: "8px 14px",
-    borderRadius: "999px",
-    background: "#d9fff7",
-    color: "#04786b",
-    fontWeight: "800",
-    marginBottom: "22px",
-  }}
->
-  ✨ Free creator tools
-</div>
-
-<div
-  style={{
-    fontSize: "52px",
-    marginBottom: "12px",
+    fontSize: "42px",
+    marginBottom: "8px",
   }}
 >
   🌿
 </div>
 
-
+<h1
+  style={{
+    fontSize: "clamp(34px, 7vw, 60px)",
+    lineHeight: "1",
+    letterSpacing: "-2px",
+    margin: "0 0 18px",
+    fontWeight: "900",
+  }}
+>
+  <span style={{ whiteSpace: "nowrap" }}>
+    PixelMint <span style={{ color: "#00bfa6" }}>Tools</span>
+  </span>
+</h1>
          <h1
 
           style={{
