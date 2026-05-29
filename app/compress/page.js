@@ -53,14 +53,9 @@ export default function CompressPage() {
     if (!compressedImage) return;
 
     const blob = await fetch(compressedImage).then((res) => res.blob());
-
-    const file = new File(
-      [blob],
-      "pixelmint-compressed-image.jpg",
-      {
-        type: blob.type,
-      }
-    );
+    const file = new File([blob], "pixelmint-compressed-image.jpg", {
+      type: "image/jpeg",
+    });
 
     if (navigator.canShare?.({ files: [file] })) {
       await navigator.share({
@@ -73,39 +68,25 @@ export default function CompressPage() {
   }
 
   async function copyImage() {
-    if (!compressedImage) return;
+    if (!image) return;
 
-    const img = new Image();
-    img.src = compressedImage;
+    const canvas = document.createElement("canvas");
+    canvas.width = image.width;
+    canvas.height = image.height;
 
-    img.onload = async () => {
-      const canvas = document.createElement("canvas");
-      canvas.width = img.width;
-      canvas.height = img.height;
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(image, 0, 0);
 
-      const ctx = canvas.getContext("2d");
-      ctx.drawImage(img, 0, 0);
-
-      canvas.toBlob(
-        async (blob) => {
-          try {
-            await navigator.clipboard.write([
-              new ClipboardItem({
-                "image/png": blob,
-              }),
-            ]);
-
-            alert("Image copied!");
-          } catch {
-            alert(
-              "Copy may not work on this browser. Try Share / Save to Photos instead."
-            );
-          }
-        },
-        "image/png",
-        1
-      );
-    };
+    canvas.toBlob(async (blob) => {
+      try {
+        await navigator.clipboard.write([
+          new ClipboardItem({ "image/png": blob }),
+        ]);
+        alert("Image copied!");
+      } catch {
+        alert("Copy may not work on this browser. Use Share / Save to Photos instead.");
+      }
+    }, "image/png");
   }
 
   return (
@@ -115,60 +96,26 @@ export default function CompressPage() {
         background:
           "radial-gradient(circle at top left, #b7fff2 0%, transparent 35%), linear-gradient(135deg, #f0fffb 0%, #e8f7ff 45%, #fff7ed 100%)",
         padding: "36px 20px",
-        fontFamily:
-          "Avenir Next, Inter, ui-sans-serif, system-ui, sans-serif",
+        fontFamily: "Avenir Next, Inter, ui-sans-serif, system-ui, sans-serif",
         color: "#102033",
       }}
     >
       <section style={{ maxWidth: "900px", margin: "0 auto" }}>
-        <a
-          href="/"
-          style={{
-            color: "#04786b",
-            fontWeight: "800",
-          }}
-        >
+        <a href="/" style={{ color: "#04786b", fontWeight: "800" }}>
           ← Back to Home
         </a>
 
-        <h1
-          style={{
-            fontSize: "42px",
-            fontWeight: "900",
-            marginTop: "28px",
-          }}
-        >
+        <h1 style={{ fontSize: "42px", fontWeight: "900", marginTop: "28px" }}>
           Free Image <span style={{ color: "#00bfa6" }}>Compressor</span>
         </h1>
 
-        <div
-          style={{
-            background: "white",
-            borderRadius: "24px",
-            padding: "28px",
-            boxShadow:
-              "0 18px 45px rgba(15,79,88,0.12)",
-          }}
-        >
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleImageUpload}
-          />
+        <div style={{ background: "white", borderRadius: "24px", padding: "28px" }}>
+          <input type="file" accept="image/*" onChange={handleImageUpload} />
 
           {preview && (
             <>
               <h2>Original Image</h2>
-
-              <img
-                src={preview}
-                alt="Original preview"
-                style={{
-                  maxWidth: "100%",
-                  marginTop: "12px",
-                  borderRadius: "16px",
-                }}
-              />
+              <img src={preview} alt="Original preview" style={{ maxWidth: "100%", borderRadius: "16px" }} />
 
               <div style={{ marginTop: "24px" }}>
                 <label style={{ fontWeight: "900" }}>
@@ -180,13 +127,8 @@ export default function CompressPage() {
                   min="10"
                   max="100"
                   value={quality}
-                  onChange={(e) =>
-                    setQuality(e.target.value)
-                  }
-                  style={{
-                    width: "100%",
-                    marginTop: "12px",
-                  }}
+                  onChange={(e) => setQuality(e.target.value)}
+                  style={{ width: "100%", marginTop: "12px" }}
                 />
 
                 <button
@@ -211,27 +153,10 @@ export default function CompressPage() {
 
           {compressedImage && (
             <>
-              <h2 style={{ marginTop: "28px" }}>
-                Compressed Image
-              </h2>
+              <h2 style={{ marginTop: "28px" }}>Compressed Image</h2>
+              <p style={{ color: "#04786b", fontWeight: "800" }}>{message}</p>
 
-              <p
-                style={{
-                  color: "#04786b",
-                  fontWeight: "800",
-                }}
-              >
-                {message}
-              </p>
-
-              <img
-                src={compressedImage}
-                alt="Compressed preview"
-                style={{
-                  maxWidth: "100%",
-                  borderRadius: "16px",
-                }}
-              />
+              <img src={compressedImage} alt="Compressed preview" style={{ maxWidth: "100%", borderRadius: "16px" }} />
 
               <a
                 href={compressedImage}
@@ -251,37 +176,11 @@ export default function CompressPage() {
                 Download Compressed Image
               </a>
 
-              <button
-                onClick={shareImage}
-                style={{
-                  width: "100%",
-                  marginTop: "12px",
-                  padding: "16px",
-                  borderRadius: "14px",
-                  border: "none",
-                  background: "#00bfa6",
-                  color: "white",
-                  fontWeight: "900",
-                  fontSize: "18px",
-                }}
-              >
+              <button onClick={shareImage} style={{ width: "100%", marginTop: "12px", padding: "16px", borderRadius: "14px", border: "none", background: "#00bfa6", color: "white", fontWeight: "900", fontSize: "18px" }}>
                 Share / Save to Photos
               </button>
 
-              <button
-                onClick={copyImage}
-                style={{
-                  width: "100%",
-                  marginTop: "12px",
-                  padding: "16px",
-                  borderRadius: "14px",
-                  border: "2px solid #00bfa6",
-                  background: "white",
-                  color: "#04786b",
-                  fontWeight: "900",
-                  fontSize: "18px",
-                }}
-              >
+              <button onClick={copyImage} style={{ width: "100%", marginTop: "12px", padding: "16px", borderRadius: "14px", border: "2px solid #00bfa6", background: "white", color: "#04786b", fontWeight: "900", fontSize: "18px" }}>
                 Copy Image
               </button>
             </>
