@@ -136,7 +136,43 @@ export default function ResizePage() {
               </button>
             </>
           )}
-        </div>
+       <div
+  style={{
+    marginTop: "40px",
+    borderTop: "1px solid #e5e7eb",
+    paddingTop: "30px",
+  }}
+>
+  <h2>Frequently Asked Questions</h2>
+
+  <h3>What does an image resizer do?</h3>
+  <p>
+    An image resizer changes the dimensions of an image to fit websites,
+    social media platforms, email newsletters, and other online uses.
+  </p>
+
+  <h3>Is PixelMint free?</h3>
+  <p>
+    Yes. All PixelMint tools are completely free to use.
+  </p>
+
+  <h3>Does PixelMint add watermarks?</h3>
+  <p>
+    No. PixelMint never adds watermarks to your images.
+  </p>
+
+  <h3>Can I resize images on my phone?</h3>
+  <p>
+    Yes. PixelMint works on mobile phones, tablets, and desktop computers.
+  </p>
+
+  <h3>What image formats are supported?</h3>
+  <p>
+    Most common image formats are supported, including JPG, PNG, and WebP.
+  </p>
+</div>
+            
+            </div>
       </section>
     </main>
   );
