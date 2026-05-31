@@ -185,7 +185,46 @@ export default function CompressPage() {
               </button>
             </>
           )}
-        </div>
+        
+            <div
+  style={{
+    marginTop: "40px",
+    borderTop: "1px solid #e5e7eb",
+    paddingTop: "30px",
+  }}
+>
+  <h2>Frequently Asked Questions</h2>
+
+  <h3>What does an image compressor do?</h3>
+  <p>
+    An image compressor reduces file size while maintaining image quality,
+    helping websites load faster and reducing storage space.
+  </p>
+
+  <h3>Is PixelMint free?</h3>
+  <p>
+    Yes. All PixelMint tools are completely free to use.
+  </p>
+
+  <h3>Does PixelMint add watermarks?</h3>
+  <p>
+    No. PixelMint never adds watermarks to your images.
+  </p>
+
+  <h3>Can I compress images on my phone?</h3>
+  <p>
+    Yes. PixelMint works on mobile phones, tablets, and desktop computers.
+  </p>
+
+  <h3>Why should I compress images?</h3>
+  <p>
+    Smaller image files load faster, improve website performance, and save
+    storage space.
+  </p>
+</div>
+            
+            
+            </div>
       </section>
     </main>
   );
