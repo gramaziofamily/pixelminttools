@@ -95,31 +95,6 @@ export default function CropPage() {
     }, "image/png");
   }
 
-  async function copyImage() {
-    if (!image || !lastCrop) {
-      alert("Crop an image first.");
-      return;
-    }
-
-    try {
-      const canvas = makeCanvas(lastCrop.targetWidth, lastCrop.targetHeight);
-
-      const blobPromise = new Promise((resolve) => {
-        canvas.toBlob((blob) => resolve(blob), "image/png");
-      });
-
-      await navigator.clipboard.write([
-        new ClipboardItem({
-          "image/png": blobPromise,
-        }),
-      ]);
-
-      alert("Image copied!");
-    } catch {
-      alert("Copy may not work on this browser. Try Share / Save to Photos.");
-    }
-  }
-
   async function shareImage() {
     if (!image || !lastCrop) {
       alert("Crop an image first.");
@@ -244,23 +219,6 @@ export default function CropPage() {
                 }}
               >
                 Share / Save to Photos
-              </button>
-
-              <button
-                onClick={copyImage}
-                style={{
-                  width: "100%",
-                  marginTop: "12px",
-                  padding: "16px",
-                  borderRadius: "14px",
-                  border: "2px solid #00bfa6",
-                  background: "white",
-                  color: "#04786b",
-                  fontWeight: "900",
-                  fontSize: "18px",
-                }}
-              >
-                Copy Image
               </button>
             </>
           )}
