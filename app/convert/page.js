@@ -230,7 +230,45 @@ export default function ConvertPage() {
               </button>
             </>
           )}
-        </div>
+       
+          <div
+  style={{
+    marginTop: "40px",
+    borderTop: "1px solid #e5e7eb",
+    paddingTop: "30px",
+  }}
+>
+  <h2>Frequently Asked Questions</h2>
+
+  <h3>What does an image converter do?</h3>
+  <p>
+    An image converter changes one image format into another, such as JPG to
+    PNG or PNG to JPG.
+  </p>
+
+  <h3>Is PixelMint free?</h3>
+  <p>
+    Yes. All PixelMint tools are completely free to use.
+  </p>
+
+  <h3>Does PixelMint add watermarks?</h3>
+  <p>
+    No. PixelMint never adds watermarks to your images.
+  </p>
+
+  <h3>Can I convert images on my phone?</h3>
+  <p>
+    Yes. PixelMint works on mobile phones, tablets, and desktop computers.
+  </p>
+
+  <h3>Which image formats are supported?</h3>
+  <p>
+    PixelMint supports popular image formats including JPG and PNG.
+  </p>
+</div>  
+            
+            
+            </div>
       </section>
     </main>
   );
