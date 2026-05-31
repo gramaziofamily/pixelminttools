@@ -6,6 +6,7 @@ export default function Home() {
     ["Social Media Image Cropper", "/crop", "Crop images for Instagram, Pinterest, YouTube, and more."],
     ["Background Remover", "/background-remover", "Prepare clean product photos and graphics."],
  ["Image Rotator", "/rotate", "Rotate images sideways or upside down for free."],
+["Image Flipper", "/flip", "Flip images horizontally or vertically for free."],
   ];
 
   const footerLinks = [
