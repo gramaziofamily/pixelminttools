@@ -5,6 +5,7 @@ export default function Home() {
     ["JPG / PNG Converter", "/convert", "Convert image formats for free."],
     ["Social Media Image Cropper", "/crop", "Crop images for Instagram, Pinterest, YouTube, and more."],
     ["Background Remover", "/background-remover", "Prepare clean product photos and graphics."],
+ ["Image Rotator", "/rotate", "Rotate images sideways or upside down for free."],
   ];
 
   const footerLinks = [
