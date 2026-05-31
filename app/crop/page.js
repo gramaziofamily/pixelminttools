@@ -222,7 +222,42 @@ export default function CropPage() {
               </button>
             </>
           )}
-        </div>
+        
+          <div
+  style={{
+    marginTop: "40px",
+    borderTop: "1px solid #e5e7eb",
+    paddingTop: "30px",
+  }}
+>
+  <h2>Frequently Asked Questions</h2>
+
+  <h3>What does a social media cropper do?</h3>
+  <p>
+    A social media cropper helps resize and crop images into common sizes for
+    Instagram, Pinterest, YouTube, Facebook, and profile pictures.
+  </p>
+
+  <h3>Is PixelMint free?</h3>
+  <p>Yes. All PixelMint tools are completely free to use.</p>
+
+  <h3>Does PixelMint add watermarks?</h3>
+  <p>No. PixelMint never adds watermarks to your images.</p>
+
+  <h3>Can I crop images on my phone?</h3>
+  <p>
+    Yes. PixelMint works on mobile phones, tablets, and desktop computers.
+  </p>
+
+  <h3>Why crop images for social media?</h3>
+  <p>
+    Each social platform uses different image sizes. Cropping helps your images
+    fit properly without awkward cuts or stretched previews.
+  </p>
+</div>  
+            
+            
+            </div>
       </section>
     </main>
   );
