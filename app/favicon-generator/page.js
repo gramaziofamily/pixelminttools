@@ -3,14 +3,49 @@
 import { useState } from "react";
 
 export default function FaviconGeneratorPage() {
+  const [sourceImage, setSourceImage] = useState(null);
   const [preview, setPreview] = useState("");
+  const [favicons, setFavicons] = useState([]);
+
+  const sizes = [16, 32, 48, 64];
 
   function handleUpload(e) {
     const file = e.target.files[0];
     if (!file) return;
 
+    const img = new Image();
     const url = URL.createObjectURL(file);
-    setPreview(url);
+
+    img.onload = () => {
+      setSourceImage(img);
+      setPreview(url);
+      setFavicons([]);
+    };
+
+    img.src = url;
+  }
+
+  function generateFavicons() {
+    if (!sourceImage) return;
+
+    const generated = sizes.map((size) => {
+      const canvas = document.createElement("canvas");
+      canvas.width = size;
+      canvas.height = size;
+
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(sourceImage, 0, 0, size, size);
+
+      const dataUrl = canvas.toDataURL("image/png");
+
+      return {
+        size,
+        url: dataUrl,
+        filename: `pixelmint-favicon-${size}x${size}.png`,
+      };
+    });
+
+    setFavicons(generated);
   }
 
   return (
@@ -20,8 +55,7 @@ export default function FaviconGeneratorPage() {
         background:
           "radial-gradient(circle at top left, #b7fff2 0%, transparent 35%), linear-gradient(135deg, #f0fffb 0%, #e8f7ff 45%, #fff7ed 100%)",
         padding: "36px 20px",
-        fontFamily:
-          "Avenir Next, Inter, ui-sans-serif, system-ui, sans-serif",
+        fontFamily: "Avenir Next, Inter, ui-sans-serif, system-ui, sans-serif",
         color: "#102033",
       }}
     >
@@ -34,29 +68,13 @@ export default function FaviconGeneratorPage() {
           Favicon <span style={{ color: "#00bfa6" }}>Generator</span>
         </h1>
 
-        <p
-          style={{
-            fontSize: "18px",
-            lineHeight: "1.7",
-            color: "#516174",
-          }}
-        >
-          Create favicon images for websites, blogs, stores, and businesses.
+        <p style={{ fontSize: "18px", lineHeight: "1.7", color: "#516174" }}>
+          Create downloadable favicon images for websites, blogs, stores, and
+          businesses.
         </p>
 
-        <div
-          style={{
-            background: "white",
-            borderRadius: "24px",
-            padding: "28px",
-            boxShadow: "0 18px 45px rgba(15,79,88,0.12)",
-          }}
-        >
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleUpload}
-          />
+        <div style={{ background: "white", borderRadius: "24px", padding: "28px" }}>
+          <input type="file" accept="image/*" onChange={handleUpload} />
 
           {preview && (
             <>
@@ -73,28 +91,71 @@ export default function FaviconGeneratorPage() {
                 }}
               />
 
-              <div
+              <button
+                onClick={generateFavicons}
                 style={{
-                  display: "flex",
-                  gap: "20px",
-                  marginTop: "24px",
-                  flexWrap: "wrap",
+                  width: "100%",
+                  marginTop: "18px",
+                  padding: "16px",
+                  borderRadius: "14px",
+                  border: "none",
+                  background: "#00bfa6",
+                  color: "white",
+                  fontWeight: "900",
+                  fontSize: "18px",
                 }}
               >
-                {[16, 32, 48, 64].map((size) => (
-                  <div key={size}>
-                    <div>{size}×{size}</div>
+                Generate Favicons
+              </button>
+            </>
+          )}
+
+          {favicons.length > 0 && (
+            <>
+              <h2 style={{ marginTop: "28px" }}>Download Favicons</h2>
+
+              <div style={{ display: "grid", gap: "18px" }}>
+                {favicons.map((icon) => (
+                  <div
+                    key={icon.size}
+                    style={{
+                      padding: "18px",
+                      borderRadius: "18px",
+                      border: "1px solid #e5e7eb",
+                    }}
+                  >
+                    <p style={{ fontWeight: "900" }}>
+                      {icon.size}×{icon.size} PNG
+                    </p>
 
                     <img
-                      src={preview}
-                      alt={`${size}px favicon`}
+                      src={icon.url}
+                      alt={`${icon.size} favicon`}
                       style={{
-                        width: size,
-                        height: size,
+                        width: icon.size,
+                        height: icon.size,
                         objectFit: "cover",
                         border: "1px solid #ddd",
                       }}
                     />
+
+                    <a
+                      href={icon.url}
+                      download={icon.filename}
+                      style={{
+                        display: "block",
+                        marginTop: "14px",
+                        padding: "14px",
+                        borderRadius: "14px",
+                        background: "#102033",
+                        color: "white",
+                        textAlign: "center",
+                        fontWeight: "900",
+                        textDecoration: "none",
+                      }}
+                    >
+                      Download {icon.size}×{icon.size}
+                    </a>
                   </div>
                 ))}
               </div>
@@ -122,15 +183,14 @@ export default function FaviconGeneratorPage() {
               look more professional.
             </p>
 
-            <h3>What favicon size should I use?</h3>
+            <h3>What favicon sizes can I download?</h3>
             <p>
-              Most websites use 16×16, 32×32, and 48×48 favicon sizes.
+              PixelMint creates 16×16, 32×32, 48×48, and 64×64 PNG favicon
+              images.
             </p>
 
             <h3>Is PixelMint free?</h3>
-            <p>
-              Yes. All PixelMint Tools are free and require no signup.
-            </p>
+            <p>Yes. All PixelMint Tools are free and require no signup.</p>
           </div>
         </div>
       </section>
