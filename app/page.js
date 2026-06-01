@@ -35,6 +35,14 @@ export default function Home() {
       "/webp-converter",
       "Convert WebP images into PNG files instantly.",
     ],
+
+[
+  "PNG to JPG Converter",
+  "/png-to-jpg",
+  "Convert PNG images into JPG files for smaller uploads.",
+],
+
+    
     [
       "Background Remover",
       "/background-remover",
