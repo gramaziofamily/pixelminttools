@@ -3,17 +3,17 @@ export default function Home() {
     {
       title: "🌟 Most Popular Tools",
       tools: [
-        ["🖼️ Image Resizer", "/resize", "Resize images for websites, social media, blogs, and online stores."],
-        ["🔗 QR Code Generator", "/qr-code-generator", "Create free QR codes for links, menus, shops, and business cards."],
-        ["📱 HEIC to JPG Converter", "/heic-to-jpg", "Convert iPhone HEIC photos into JPG files for websites and uploads."],
-        ["🗜️ Image Compressor", "/compress", "Reduce image file size while maintaining image quality."],
+        ["🖼️ Image Resizer", "/resize", "Resize images for Canva designs, Etsy listings, Pinterest pins, Instagram posts, websites, blogs, and online stores."],
+        ["🔗 QR Code Generator", "/qr-code-generator", "Create QR codes for websites, Instagram profiles, Etsy shops, business cards, restaurant menus, and marketing materials."],
+        ["📱 HEIC to JPG Converter", "/heic-to-jpg", "Convert iPhone HEIC photos into JPG files for Canva, Etsy, websites, Shopify stores, forms, and uploads."],
+        ["🗜️ Image Compressor", "/compress", "Compress Canva exports, Etsy product photos, website images, blog graphics, and social media posts while maintaining quality."],
         ["📄 PNG to JPG Converter", "/png-to-jpg", "Convert PNG images into JPG files for smaller uploads."],
       ],
     },
     {
       title: "🖼️ Image Editing Tools",
       tools: [
-        ["✂️ Social Media Cropper", "/crop", "Create perfectly sized images for Instagram, Pinterest, YouTube, and Facebook."],
+        ["✂️ Social Media Cropper", "/crop", "Resize Canva graphics for Instagram posts, Pinterest pins, YouTube thumbnails, Facebook posts, and social media marketing."],
         ["🔄 Image Rotator", "/rotate", "Rotate images 90°, 180°, or 270° in seconds."],
         ["↔️ Image Flipper", "/flip", "Flip images horizontally or vertically with one click."],
         ["✨ Background Remover", "/background-remover", "Coming soon: remove image backgrounds for product photos and graphics."],
@@ -23,21 +23,21 @@ export default function Home() {
       title: "🔄 Image Converters",
       tools: [
         ["🖼️ JPG to PNG Converter", "/convert", "Convert JPG and PNG images instantly with no software required."],
-        ["🌐 WebP Converter", "/webp-converter", "Convert WebP images into PNG files instantly."],
-        ["🎨 SVG to PNG Converter", "/svg-to-png", "Convert SVG graphics into downloadable PNG images."],
+        ["🌐 WebP Converter", "/webp-converter", "Convert WebP images into PNG files for Canva projects, websites, Etsy listings, and online stores."],
+        ["🎨 SVG to PNG Converter", "/svg-to-png", "Convert SVG graphics into PNG images for Canva, Cricut projects, Etsy downloads, websites, and social media."],
       ],
     },
     {
       title: "📄 PDF Tools",
       tools: [
         ["📄 Image to PDF Converter", "/image-to-pdf", "Convert images into downloadable PDF files."],
-        ["🖼️ PDF to Image Converter", "/pdf-to-image", "Convert PDF pages into JPG and PNG image files."],
+        ["🖼️ PDF to Image Converter", "/pdf-to-image", "Convert PDF pages into JPG and PNG images for Canva projects, presentations, websites, and social media content."],
       ],
     },
     {
       title: "🌐 Website & Business Tools",
       tools: [
-        ["⭐ Favicon Generator", "/favicon-generator", "Create favicon icons for websites and businesses."],
+        ["⭐ Favicon Generator", "/favicon-generator", "Create favicon icons for websites, Shopify stores, blogs, portfolios, and online businesses."],
       ],
     },
   ];
