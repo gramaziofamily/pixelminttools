@@ -73,7 +73,7 @@ export default function Home() {
             marginBottom: "24px",
           }}
         >
-          ✨ Free creator tools
+          ✨ 15+ Free Online Tools
         </div>
 
         <div style={{ fontSize: "42px", marginBottom: "8px" }}>🌿</div>
