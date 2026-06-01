@@ -48,6 +48,12 @@ export default function Home() {
   "Convert iPhone HEIC photos into JPG files for websites and uploads.",
 ],
 
+    [
+  "Favicon Generator",
+  "/favicon-generator",
+  "Create favicon icons for websites and businesses.",
+],
+
     
     [
       "Background Remover",
