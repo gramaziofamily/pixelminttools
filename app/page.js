@@ -48,6 +48,13 @@ export default function Home() {
   "Convert iPhone HEIC photos into JPG files for websites and uploads.",
 ],
 
+[
+  "PDF to Image Converter",
+  "/pdf-to-image",
+  "Convert PDF pages into JPG and PNG image files.",
+],
+    
+
     [
   "Favicon Generator",
   "/favicon-generator",
