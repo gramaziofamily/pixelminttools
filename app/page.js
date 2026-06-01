@@ -35,17 +35,20 @@ export default function Home() {
       ],
     },
     {
-      title: "🌐 Website & Business Tools",
-      tools: [
-     [
-  "💰 Etsy Fee Calculator",
-  "/etsy-fee-calculator",
-  "Calculate Etsy fees, selling costs, and estimated profit."
-]
-        
-        ["⭐ Favicon Generator", "/favicon-generator", "Create favicon icons for websites, Shopify stores, blogs, portfolios, and online businesses."],
-      ],
-    },
+  title: "🌐 Website & Business Tools",
+  tools: [
+    [
+      "💰 Etsy Fee Calculator",
+      "/etsy-fee-calculator",
+      "Calculate Etsy fees, selling costs, and estimated profit.",
+    ],
+    [
+      "⭐ Favicon Generator",
+      "/favicon-generator",
+      "Create favicon icons for websites and businesses.",
+    ],
+  ],
+},
   ];
 
   const footerLinks = [
