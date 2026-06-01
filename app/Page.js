@@ -1,12 +1,40 @@
 export default function Home() {
   const tools = [
-    ["Image Resizer", "/resize", "Resize images for social media, websites, and shops."],
-    ["Image Compressor", "/compress", "Make image files smaller and faster to upload."],
-    ["JPG / PNG Converter", "/convert", "Convert image formats for free."],
-    ["Social Media Image Cropper", "/crop", "Crop images for Instagram, Pinterest, YouTube, and more."],
-    ["Background Remover", "/background-remover", "Prepare clean product photos and graphics."],
- ["Image Rotator", "/rotate", "Rotate images sideways or upside down for free."],
-["Image Flipper", "/flip", "Flip images horizontally or vertically for free."],
+    [
+      "Image Resizer",
+      "/resize",
+      "Resize images for websites, social media, blogs, and online stores.",
+    ],
+    [
+      "Image Compressor",
+      "/compress",
+      "Reduce image file size while maintaining image quality.",
+    ],
+    [
+      "JPG / PNG Converter",
+      "/convert",
+      "Convert JPG and PNG images instantly with no software required.",
+    ],
+    [
+      "Social Media Image Cropper",
+      "/crop",
+      "Create perfectly sized images for Instagram, Pinterest, YouTube, and Facebook.",
+    ],
+    [
+      "Image Rotator",
+      "/rotate",
+      "Rotate images 90°, 180°, or 270° in seconds.",
+    ],
+    [
+      "Image Flipper",
+      "/flip",
+      "Flip images horizontally or vertically with one click.",
+    ],
+    [
+      "Background Remover",
+      "/background-remover",
+      "Coming soon: remove image backgrounds for product photos and graphics.",
+    ],
   ];
 
   const footerLinks = [
@@ -88,7 +116,10 @@ export default function Home() {
                 border: "1px solid rgba(0,191,166,0.18)",
               }}
             >
-              <div style={{ fontSize: "26px", fontWeight: "900" }}>{title}</div>
+              <div style={{ fontSize: "26px", fontWeight: "900" }}>
+                {title}
+              </div>
+
               <div
                 style={{
                   marginTop: "8px",
@@ -113,9 +144,15 @@ export default function Home() {
           }}
         >
           <h2 style={{ fontSize: "32px", marginTop: 0 }}>Why PixelMint?</h2>
+
           <p style={{ fontSize: "18px", lineHeight: "1.6", color: "#516174" }}>
             PixelMint Tools helps you quickly prepare images for websites,
             online shops, social media posts, thumbnails, and digital content.
+          </p>
+
+          <p style={{ fontSize: "18px", lineHeight: "1.6", color: "#516174" }}>
+            Every tool is free to use, requires no signup, and never adds
+            watermarks to your images.
           </p>
         </div>
 
@@ -153,5 +190,5 @@ export default function Home() {
         </footer>
       </section>
     </main>
-  ); 
+  );
 }
