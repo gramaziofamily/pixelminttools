@@ -101,8 +101,7 @@ export default function Home() {
             marginBottom: "24px",
           }}
         >
-          Free online tools for creators, Etsy sellers, bloggers, and small businesses. Convert images, create QR codes, generate favicons, work with PDFs, and more. No signup. No watermarks.
-        </p>
+          Free online tools for Canva users, Etsy sellers, bloggers, Pinterest creators, YouTubers, and small businesses. Convert images, create QR codes, generate favicons, work with PDFs, and more. No signup. No watermarks.        </p>
 
         {sections.map((section) => (
           <div key={section.title} style={{ marginTop: "42px" }}>
