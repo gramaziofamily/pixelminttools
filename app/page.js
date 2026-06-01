@@ -101,8 +101,7 @@ export default function Home() {
             marginBottom: "24px",
           }}
         >
-          Free image tools for creators, Etsy sellers, bloggers, and small
-          businesses. No signup. No watermarks.
+          Free online tools for creators, Etsy sellers, bloggers, and small businesses. Convert images, create QR codes, generate favicons, work with PDFs, and more. No signup. No watermarks.
         </p>
 
         {sections.map((section) => (
