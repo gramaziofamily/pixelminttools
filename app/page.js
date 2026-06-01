@@ -10,6 +10,13 @@ export default function Home() {
       "/compress",
       "Reduce image file size while maintaining image quality.",
     ],
+
+[
+  "QR Code Generator",
+  "/qr-code-generator",
+  "Create free QR codes for links, menus, shops, and business cards.",
+],
+    
     [
       "JPG / PNG Converter",
       "/convert",
