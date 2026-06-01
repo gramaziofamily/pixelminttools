@@ -15,6 +15,13 @@ export default function Home() {
       "/convert",
       "Convert JPG and PNG images instantly with no software required.",
     ],
+
+[
+  "SVG to PNG Converter",
+  "/svg-to-png",
+  "Convert SVG graphics into downloadable PNG images.",
+],
+    
     [
       "Social Media Image Cropper",
       "/crop",
