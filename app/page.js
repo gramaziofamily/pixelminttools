@@ -30,6 +30,11 @@ export default function Home() {
       "/flip",
       "Flip images horizontally or vertically with one click.",
     ],
+
+graphics.",
+    ],
+
+    
     [
       "Background Remover",
       "/background-remover",
