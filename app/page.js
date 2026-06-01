@@ -1,99 +1,110 @@
 export default function Home() {
-  const tools = [
-    [
-      "Image Resizer",
-      "/resize",
-      "Resize images for websites, social media, blogs, and online stores.",
-    ],
-    [
-      "Image Compressor",
-      "/compress",
-      "Reduce image file size while maintaining image quality.",
-    ],
-
-[
-  "QR Code Generator",
-  "/qr-code-generator",
-  "Create free QR codes for links, menus, shops, and business cards.",
-],
-    
-    [
-      "JPG to PNG Converter",
-      "/convert",
-      "Convert JPG and PNG images instantly with no software required.",
-    ],
-
-[
-  "SVG to PNG Converter",
-  "/svg-to-png",
-  "Convert SVG graphics into downloadable PNG images.",
-],
-
-[
-  "PNG to JPG Converter",
-  "/png-to-jpg",
-  "Convert PNG images into JPG files for smaller uploads.",
-],
-
-    [
-  "HEIC to JPG Converter",
-  "/heic-to-jpg",
-  "Convert iPhone HEIC photos into JPG files for websites and uploads.",
-],
-
-[
-  "PDF to Image Converter",
-  "/pdf-to-image",
-  "Convert PDF pages into JPG and PNG image files.",
-],
-    
-
-    
-    
-    [
-      "Social Media Image Cropper",
-      "/crop",
-      "Create perfectly sized images for Instagram, Pinterest, YouTube, and Facebook.",
-    ],
-    [
-      "Image Rotator",
-      "/rotate",
-      "Rotate images 90°, 180°, or 270° in seconds.",
-    ],
-    [
-      "Image Flipper",
-      "/flip",
-      "Flip images horizontally or vertically with one click.",
-    ],
-    [
-      "WebP Converter",
-      "/webp-converter",
-      "Convert WebP images into PNG files instantly.",
-    ],
-
-
-
-    [
-  "Favicon Generator",
-  "/favicon-generator",
-  "Create favicon icons for websites and businesses.",
-],
-
- [
-  "Image to PDF Converter",
-  "/image-to-pdf",
-  "Convert images into downloadable PDF files.",
-],   
-    
-    [
-      "Background Remover",
-      "/background-remover",
-      "Coming soon: remove image backgrounds for product photos and graphics.",
-    ],
+  const sections = [
+    {
+      title: "🌟 Most Popular Tools",
+      tools: [
+        [
+          "🖼️ Image Resizer",
+          "/resize",
+          "Resize images for websites, social media, blogs, and online stores.",
+        ],
+        [
+          "🔗 QR Code Generator",
+          "/qr-code-generator",
+          "Create free QR codes for links, menus, shops, and business cards.",
+        ],
+        [
+          "📱 HEIC to JPG Converter",
+          "/heic-to-jpg",
+          "Convert iPhone HEIC photos into JPG files for websites and uploads.",
+        ],
+        [
+          "🗜️ Image Compressor",
+          "/compress",
+          "Reduce image file size while maintaining image quality.",
+        ],
+        [
+          "📄 PNG to JPG Converter",
+          "/png-to-jpg",
+          "Convert PNG images into JPG files for smaller uploads.",
+        ],
+      ],
+    },
+    {
+      title: "🖼️ Image Editing Tools",
+      tools: [
+        [
+          "✂️ Social Media Image Cropper",
+          "/crop",
+          "Create perfectly sized images for Instagram, Pinterest, YouTube, and Facebook.",
+        ],
+        [
+          "🔄 Image Rotator",
+          "/rotate",
+          "Rotate images 90°, 180°, or 270° in seconds.",
+        ],
+        [
+          "↔️ Image Flipper",
+          "/flip",
+          "Flip images horizontally or vertically with one click.",
+        ],
+        [
+          "✨ Background Remover",
+          "/background-remover",
+          "Coming soon: remove image backgrounds for product photos and graphics.",
+        ],
+      ],
+    },
+    {
+      title: "🔄 Image Converters",
+      tools: [
+        [
+          "🖼️ JPG / PNG Converter",
+          "/convert",
+          "Convert JPG and PNG images instantly with no software required.",
+        ],
+        [
+          "🌐 WebP Converter",
+          "/webp-converter",
+          "Convert WebP images into PNG files instantly.",
+        ],
+        [
+          "🎨 SVG to PNG Converter",
+          "/svg-to-png",
+          "Convert SVG graphics into downloadable PNG images.",
+        ],
+      ],
+    },
+    {
+      title: "📄 PDF Tools",
+      tools: [
+        [
+          "📄 Image to PDF Converter",
+          "/image-to-pdf",
+          "Convert images into downloadable PDF files.",
+        ],
+        [
+          "🖼️ PDF to Image Converter",
+          "/pdf-to-image",
+          "Convert PDF pages into JPG and PNG image files.",
+        ],
+      ],
+    },
+    {
+      title: "🌐 Website & Business Tools",
+      tools: [
+        [
+          "⭐ Favicon Generator",
+          "/favicon-generator",
+          "Create favicon icons for websites and businesses.",
+        ],
+      ],
+    },
   ];
 
   const footerLinks = [
-    ["About", "/about"],
+
+   ["About", "/about"],
     ["Privacy Policy", "/privacy-policy"],
     ["Terms", "/terms"],
     ["Contact", "/contact"],
@@ -231,33 +242,61 @@ export default function Home() {
             padding: "24px 8px",
             textAlign: "center",
           }}
+        {sections.map((section) => (
+  <div key={section.title} style={{ marginTop: "42px" }}>
+    <h2
+      style={{
+        fontSize: "32px",
+        fontWeight: "900",
+        color: "#04786b",
+        marginBottom: "8px",
+      }}
+    >
+      {section.title}
+    </h2>
+
+    <div
+      style={{
+        width: "80px",
+        height: "4px",
+        background: "#00bfa6",
+        borderRadius: "999px",
+        marginBottom: "22px",
+      }}
+    />
+
+    <div style={{ display: "grid", gap: "18px" }}>
+      {section.tools.map(([title, link, desc]) => (
+        <a
+          key={title}
+          href={link}
+          style={{
+            display: "block",
+            padding: "20px",
+            borderRadius: "24px",
+            background: "rgba(255,255,255,0.92)",
+            textDecoration: "none",
+            color: "#102033",
+            boxShadow: "0 18px 45px rgba(15,79,88,0.12)",
+            border: "1px solid rgba(0,191,166,0.18)",
+          }}
         >
+          <div style={{ fontSize: "26px", fontWeight: "900" }}>
+            {title}
+          </div>
+
           <div
             style={{
-              display: "flex",
-              justifyContent: "center",
-              gap: "12px",
-              flexWrap: "wrap",
+              marginTop: "8px",
+              color: "#64748b",
+              fontSize: "16px",
+              lineHeight: "1.4",
             }}
           >
-            {footerLinks.map(([title, link]) => (
-              <a
-                key={title}
-                href={link}
-                style={{
-                  color: "#04786b",
-                  fontWeight: "800",
-                  fontSize: "14px",
-                  textDecoration: "underline",
-                  whiteSpace: "nowrap",
-                }}
-              >
-                {title}
-              </a>
-            ))}
+            {desc}
           </div>
-        </footer>
-      </section>
-    </main>
-  );
-}
+        </a>
+      ))}
+    </div>
+  </div>
+))}
