@@ -42,6 +42,12 @@ export default function Home() {
   "Convert PNG images into JPG files for smaller uploads.",
 ],
 
+    [
+  "HEIC to JPG Converter",
+  "/heic-to-jpg",
+  "Convert iPhone HEIC photos into JPG files for websites and uploads.",
+],
+
     
     [
       "Background Remover",
