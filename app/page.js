@@ -18,7 +18,7 @@ export default function Home() {
 ],
     
     [
-      "JPG / PNG Converter",
+      "JPG to PNG Converter",
       "/convert",
       "Convert JPG and PNG images instantly with no software required.",
     ],
@@ -28,6 +28,27 @@ export default function Home() {
   "/svg-to-png",
   "Convert SVG graphics into downloadable PNG images.",
 ],
+
+[
+  "PNG to JPG Converter",
+  "/png-to-jpg",
+  "Convert PNG images into JPG files for smaller uploads.",
+],
+
+    [
+  "HEIC to JPG Converter",
+  "/heic-to-jpg",
+  "Convert iPhone HEIC photos into JPG files for websites and uploads.",
+],
+
+[
+  "PDF to Image Converter",
+  "/pdf-to-image",
+  "Convert PDF pages into JPG and PNG image files.",
+],
+    
+
+    
     
     [
       "Social Media Image Cropper",
@@ -50,24 +71,7 @@ export default function Home() {
       "Convert WebP images into PNG files instantly.",
     ],
 
-[
-  "PNG to JPG Converter",
-  "/png-to-jpg",
-  "Convert PNG images into JPG files for smaller uploads.",
-],
 
-    [
-  "HEIC to JPG Converter",
-  "/heic-to-jpg",
-  "Convert iPhone HEIC photos into JPG files for websites and uploads.",
-],
-
-[
-  "PDF to Image Converter",
-  "/pdf-to-image",
-  "Convert PDF pages into JPG and PNG image files.",
-],
-    
 
     [
   "Favicon Generator",
