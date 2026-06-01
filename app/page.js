@@ -54,6 +54,11 @@ export default function Home() {
   "Create favicon icons for websites and businesses.",
 ],
 
+ [
+  "Image to PDF Converter",
+  "/image-to-pdf",
+  "Convert images into downloadable PDF files.",
+],   
     
     [
       "Background Remover",
