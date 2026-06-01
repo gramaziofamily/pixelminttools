@@ -22,7 +22,7 @@ export default function Home() {
     {
       title: "🔄 Image Converters",
       tools: [
-        ["🖼️ JPG / PNG Converter", "/convert", "Convert JPG and PNG images instantly with no software required."],
+        ["🖼️ JPG to PNG Converter", "/convert", "Convert JPG and PNG images instantly with no software required."],
         ["🌐 WebP Converter", "/webp-converter", "Convert WebP images into PNG files instantly."],
         ["🎨 SVG to PNG Converter", "/svg-to-png", "Convert SVG graphics into downloadable PNG images."],
       ],
