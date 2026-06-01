@@ -30,11 +30,11 @@ export default function Home() {
       "/flip",
       "Flip images horizontally or vertically with one click.",
     ],
-
-graphics.",
+    [
+      "WebP Converter",
+      "/webp-converter",
+      "Convert WebP images into PNG files instantly.",
     ],
-
-    
     [
       "Background Remover",
       "/background-remover",
@@ -148,14 +148,28 @@ graphics.",
             border: "1px solid rgba(0,191,166,0.18)",
           }}
         >
-          <h2 style={{ fontSize: "32px", marginTop: 0 }}>Why PixelMint?</h2>
+          <h2 style={{ fontSize: "32px", marginTop: 0 }}>
+            Why PixelMint?
+          </h2>
 
-          <p style={{ fontSize: "18px", lineHeight: "1.6", color: "#516174" }}>
+          <p
+            style={{
+              fontSize: "18px",
+              lineHeight: "1.6",
+              color: "#516174",
+            }}
+          >
             PixelMint Tools helps you quickly prepare images for websites,
             online shops, social media posts, thumbnails, and digital content.
           </p>
 
-          <p style={{ fontSize: "18px", lineHeight: "1.6", color: "#516174" }}>
+          <p
+            style={{
+              fontSize: "18px",
+              lineHeight: "1.6",
+              color: "#516174",
+            }}
+          >
             Every tool is free to use, requires no signup, and never adds
             watermarks to your images.
           </p>
