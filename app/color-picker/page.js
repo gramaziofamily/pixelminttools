@@ -1,15 +1,67 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 export default function ColorPickerPage() {
-  const [image, setImage] = useState(null);
+  const canvasRef = useRef(null);
+  const [imageUrl, setImageUrl] = useState("");
+  const [selectedColor, setSelectedColor] = useState("");
 
   function handleImage(e) {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    setImage(URL.createObjectURL(file));
+    const url = URL.createObjectURL(file);
+    setImageUrl(url);
+
+    const img = new Image();
+    img.onload = () => {
+      const canvas = canvasRef.current;
+      const ctx = canvas.getContext("2d");
+
+      canvas.width = img.width;
+      canvas.height = img.height;
+
+      ctx.drawImage(img, 0, 0);
+    };
+
+    img.src = url;
+  }
+
+  function rgbToHex(r, g, b) {
+    return (
+      "#" +
+      [r, g, b]
+        .map((x) => {
+          const hex = x.toString(16);
+          return hex.length === 1 ? "0" + hex : hex;
+        })
+        .join("")
+    ).toUpperCase();
+  }
+
+  function pickColor(event) {
+    const canvas = canvasRef.current;
+    const rect = canvas.getBoundingClientRect();
+
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+
+    const x = Math.floor((event.clientX - rect.left) * scaleX);
+    const y = Math.floor((event.clientY - rect.top) * scaleY);
+
+    const ctx = canvas.getContext("2d");
+    const pixel = ctx.getImageData(x, y, 1, 1).data;
+
+    const hex = rgbToHex(pixel[0], pixel[1], pixel[2]);
+    setSelectedColor(hex);
+  }
+
+  async function copyColor() {
+    if (!selectedColor) return;
+
+    await navigator.clipboard.writeText(selectedColor);
+    alert("Color copied: " + selectedColor);
   }
 
   return (
@@ -33,14 +85,8 @@ export default function ColorPickerPage() {
           Color Picker From <span style={{ color: "#00bfa6" }}>Image</span>
         </h1>
 
-        <p
-          style={{
-            fontSize: "18px",
-            lineHeight: "1.7",
-            color: "#516174",
-          }}
-        >
-          Upload an image and identify colors for Canva designs,
+        <p style={{ fontSize: "18px", lineHeight: "1.7", color: "#516174" }}>
+          Upload an image and tap anywhere to find a HEX color for Canva,
           Etsy branding, websites, logos, and social media graphics.
         </p>
 
@@ -52,26 +98,58 @@ export default function ColorPickerPage() {
             marginTop: "24px",
           }}
         >
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleImage}
-          />
+          <input type="file" accept="image/*" onChange={handleImage} />
 
-          {image && (
+          {imageUrl && (
             <>
-              <h2 style={{ marginTop: "24px" }}>
-                Uploaded Image
-              </h2>
+              <h2 style={{ marginTop: "24px" }}>Tap Image to Pick a Color</h2>
 
-              <img
-                src={image}
-                alt="Uploaded"
+              <canvas
+                ref={canvasRef}
+                onClick={pickColor}
                 style={{
                   width: "100%",
                   borderRadius: "16px",
+                  cursor: "crosshair",
+                  marginTop: "12px",
                 }}
               />
+
+              {selectedColor && (
+                <div style={{ marginTop: "24px" }}>
+                  <h2>Selected Color</h2>
+
+                  <div
+                    style={{
+                      width: "100%",
+                      height: "80px",
+                      background: selectedColor,
+                      borderRadius: "16px",
+                      border: "1px solid #ddd",
+                    }}
+                  />
+
+                  <p style={{ fontSize: "24px", fontWeight: "900" }}>
+                    {selectedColor}
+                  </p>
+
+                  <button
+                    onClick={copyColor}
+                    style={{
+                      width: "100%",
+                      padding: "16px",
+                      borderRadius: "14px",
+                      border: "none",
+                      background: "#00bfa6",
+                      color: "white",
+                      fontWeight: "900",
+                      fontSize: "18px",
+                    }}
+                  >
+                    Copy HEX Color
+                  </button>
+                </div>
+              )}
             </>
           )}
 
@@ -85,29 +163,24 @@ export default function ColorPickerPage() {
             <h2>How to Pick Colors From an Image</h2>
 
             <p>1. Upload your image.</p>
-            <p>2. View the image preview.</p>
-            <p>3. Select colors from the image.</p>
-            <p>4. Copy HEX color codes for Canva, websites, and branding.</p>
+            <p>2. Tap anywhere on the image.</p>
+            <p>3. View the selected HEX color code.</p>
+            <p>4. Copy the color for Canva, websites, branding, or designs.</p>
 
             <h2>Why Use a Color Picker?</h2>
 
             <p>
-              Color pickers help designers, Etsy sellers, bloggers,
-              and Canva users match brand colors and create
-              consistent designs.
+              Color pickers help Canva users, Etsy sellers, bloggers, and small
+              business owners match brand colors and create consistent designs.
             </p>
 
             <h2>Frequently Asked Questions</h2>
 
             <h3>Can I use these colors in Canva?</h3>
-            <p>
-              Yes. HEX color codes can be copied directly into Canva.
-            </p>
+            <p>Yes. HEX color codes can be copied directly into Canva.</p>
 
             <h3>Is PixelMint free?</h3>
-            <p>
-              Yes. All PixelMint tools are free and require no signup.
-            </p>
+            <p>Yes. All PixelMint tools are free and require no signup.</p>
           </div>
         </div>
       </section>
