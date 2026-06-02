@@ -52,6 +52,34 @@ export default function HeicToJpgPage() {
             iPhone HEIC image files.
           </p>
 
+<h2 style={{ marginTop: "30px" }}>How to Convert HEIC to JPG</h2>
+
+<p>
+  1. Upload your HEIC image from your iPhone or iPad.
+</p>
+
+<p>
+  2. Click Convert.
+</p>
+
+<p>
+  3. Download your JPG image instantly.
+</p>
+
+<p>
+  4. Use your JPG file for Canva designs, Etsy listings,
+  websites, social media, forms, and email attachments.
+</p>
+
+<h2>Why Convert HEIC to JPG?</h2>
+
+<p>
+  Many websites and applications do not support HEIC files.
+  Converting HEIC to JPG makes your images compatible with
+  Canva, Etsy, Pinterest, Instagram, websites, online forms,
+  and other popular platforms.
+</p>
+              
           <div
             style={{
               marginTop: "40px",
