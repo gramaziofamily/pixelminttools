@@ -117,7 +117,39 @@ export default function QRCodeGeneratorPage() {
             </>
           )}
 
-          <div
+        <h2 style={{ marginTop: "40px" }}>
+  How to Create a QR Code
+</h2>
+
+<p>
+  1. Enter a website URL, social media profile, or text.
+</p>
+
+<p>
+  2. Click Generate QR Code.
+</p>
+
+<p>
+  3. Download the QR code image.
+</p>
+
+<p>
+  4. Use your QR code on business cards, flyers,
+  restaurant menus, Etsy orders, product packaging,
+  and marketing materials.
+</p>
+
+<h2>Why Use a QR Code?</h2>
+
+<p>
+  QR codes help customers quickly access websites,
+  Instagram profiles, Etsy shops, contact information,
+  menus, and online content by simply scanning with
+  their phone.
+</p>
+            
+            
+            <div
             style={{
               marginTop: "40px",
               borderTop: "1px solid #e5e7eb",
