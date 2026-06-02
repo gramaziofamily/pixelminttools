@@ -136,7 +136,59 @@ export default function ResizePage() {
               </button>
             </>
           )}
-       <div
+       
+          <h2 style={{ marginTop: "40px" }}>
+  How to Resize an Image
+</h2>
+
+<p>
+  1. Upload your image.
+</p>
+
+<p>
+  2. Enter your desired width and height.
+</p>
+
+<p>
+  3. Click Resize Image.
+</p>
+
+<p>
+  4. Download your resized image instantly.
+</p>
+
+<h2>Common Image Sizes</h2>
+
+<p>
+  • Instagram Post: 1080 × 1080
+</p>
+
+<p>
+  • Pinterest Pin: 1000 × 1500
+</p>
+
+<p>
+  • YouTube Thumbnail: 1280 × 720
+</p>
+
+<p>
+  • Etsy Listing Image: 2000 × 2000 or larger
+</p>
+
+<p>
+  • Facebook Post: 1200 × 630
+</p>
+
+<h2>Why Resize Images?</h2>
+
+<p>
+  Resizing images helps improve website speed, optimize Canva
+  designs, prepare Etsy listing photos, create Pinterest pins,
+  upload social media graphics, and reduce file sizes while
+  maintaining image quality.
+</p>  
+            
+            <div
   style={{
     marginTop: "40px",
     borderTop: "1px solid #e5e7eb",
