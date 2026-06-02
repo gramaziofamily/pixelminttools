@@ -18,6 +18,11 @@ export default function Home() {
         ["↔️ Image Flipper", "/flip", "Flip images horizontally or vertically with one click."],
         ["✨ Background Remover", "/background-remover", "Coming soon: remove image backgrounds for product photos and graphics."],
       ],
+      [
+  "🎨 Color Picker From Image",
+  "/color-picker",
+  "Extract colors from images for Canva, Etsy branding, websites, and social media."
+],
     },
     {
       title: "🔄 Image Converters",
