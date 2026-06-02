@@ -154,6 +154,48 @@ export default function EtsyFeeCalculator() {
           </button>
 
           {result && (
+            
+            <div
+  style={{
+    marginTop: "40px",
+    borderTop: "1px solid #e5e7eb",
+    paddingTop: "30px",
+  }}
+>
+  <h2>How to Calculate Etsy Fees</h2>
+
+  <p>1. Enter your Etsy sale price.</p>
+
+  <p>2. Enter the shipping amount charged to the customer.</p>
+
+  <p>3. Enter your product cost.</p>
+
+  <p>4. Click Calculate Profit.</p>
+
+  <p>
+    5. Review your estimated Etsy fees, payment processing fees, and profit.
+  </p>
+
+  <h2>Why Use an Etsy Fee Calculator?</h2>
+
+  <p>
+    Etsy sellers pay transaction fees, payment processing fees, and listing
+    fees. Understanding your costs can help you price products correctly and
+    improve profitability.
+  </p>
+
+  <h2>Frequently Asked Questions</h2>
+
+  <h3>Does this include Etsy listing fees?</h3>
+  <p>
+    This calculator currently estimates Etsy transaction fees and payment
+    processing fees. Etsy listing and relisting fees may also apply.
+  </p>
+
+  <h3>Is PixelMint free?</h3>
+  <p>Yes. PixelMint tools are free and require no signup.</p>
+</div>
+            
             <div
               style={{
                 marginTop: "24px",
