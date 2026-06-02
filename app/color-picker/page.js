@@ -4,17 +4,16 @@ import { useRef, useState } from "react";
 
 export default function ColorPickerPage() {
   const canvasRef = useRef(null);
-  const [imageUrl, setImageUrl] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
+  const [palette, setPalette] = useState([]);
 
   function handleImage(e) {
     const file = e.target.files?.[0];
     if (!file) return;
 
     const url = URL.createObjectURL(file);
-    setImageUrl(url);
-
     const img = new Image();
+
     img.onload = () => {
       const canvas = canvasRef.current;
       const ctx = canvas.getContext("2d");
@@ -23,6 +22,8 @@ export default function ColorPickerPage() {
       canvas.height = img.height;
 
       ctx.drawImage(img, 0, 0);
+
+      createPalette(ctx, canvas.width, canvas.height);
     };
 
     img.src = url;
@@ -40,6 +41,20 @@ export default function ColorPickerPage() {
     ).toUpperCase();
   }
 
+  function createPalette(ctx, width, height) {
+    const colors = [];
+    const sampleCount = 5;
+
+    for (let i = 1; i <= sampleCount; i++) {
+      const x = Math.floor((width / (sampleCount + 1)) * i);
+      const y = Math.floor(height / 2);
+      const pixel = ctx.getImageData(x, y, 1, 1).data;
+      colors.push(rgbToHex(pixel[0], pixel[1], pixel[2]));
+    }
+
+    setPalette(colors);
+  }
+
   function pickColor(event) {
     const canvas = canvasRef.current;
     const rect = canvas.getBoundingClientRect();
@@ -53,15 +68,12 @@ export default function ColorPickerPage() {
     const ctx = canvas.getContext("2d");
     const pixel = ctx.getImageData(x, y, 1, 1).data;
 
-    const hex = rgbToHex(pixel[0], pixel[1], pixel[2]);
-    setSelectedColor(hex);
+    setSelectedColor(rgbToHex(pixel[0], pixel[1], pixel[2]));
   }
 
-  async function copyColor() {
-    if (!selectedColor) return;
-
-    await navigator.clipboard.writeText(selectedColor);
-    alert("Color copied: " + selectedColor);
+  async function copyText(text) {
+    await navigator.clipboard.writeText(text);
+    alert("Copied: " + text);
   }
 
   return (
@@ -100,57 +112,95 @@ export default function ColorPickerPage() {
         >
           <input type="file" accept="image/*" onChange={handleImage} />
 
-          {imageUrl && (
-            <>
-              <h2 style={{ marginTop: "24px" }}>Tap Image to Pick a Color</h2>
+          <h2 style={{ marginTop: "24px" }}>Tap Image to Pick a Color</h2>
 
-              <canvas
-                ref={canvasRef}
-                onClick={pickColor}
+          <canvas
+            ref={canvasRef}
+            onClick={pickColor}
+            style={{
+              width: "100%",
+              borderRadius: "16px",
+              cursor: "crosshair",
+              marginTop: "12px",
+              display: "block",
+            }}
+          />
+
+          {selectedColor && (
+            <div style={{ marginTop: "24px" }}>
+              <h2>Selected Color</h2>
+
+              <div
                 style={{
                   width: "100%",
+                  height: "80px",
+                  background: selectedColor,
                   borderRadius: "16px",
-                  cursor: "crosshair",
-                  marginTop: "12px",
+                  border: "1px solid #ddd",
                 }}
               />
 
-              {selectedColor && (
-                <div style={{ marginTop: "24px" }}>
-                  <h2>Selected Color</h2>
+              <p style={{ fontSize: "18px", fontWeight: "800" }}>
+                HEX Color Code
+              </p>
 
-                  <div
-                    style={{
-                      width: "100%",
-                      height: "80px",
-                      background: selectedColor,
-                      borderRadius: "16px",
-                      border: "1px solid #ddd",
-                    }}
-                  />
+              <p style={{ fontSize: "24px", fontWeight: "900" }}>
+                {selectedColor}
+              </p>
 
-                  <p style={{ fontSize: "24px", fontWeight: "900" }}>
-                    {selectedColor}
-                  </p>
+              <button
+                onClick={() => copyText(selectedColor)}
+                style={{
+                  width: "100%",
+                  padding: "16px",
+                  borderRadius: "14px",
+                  border: "none",
+                  background: "#00bfa6",
+                  color: "white",
+                  fontWeight: "900",
+                  fontSize: "18px",
+                }}
+              >
+                Copy HEX Color
+              </button>
+            </div>
+          )}
 
+          {palette.length > 0 && (
+            <div style={{ marginTop: "30px" }}>
+              <h2>Image Color Palette</h2>
+
+              <div style={{ display: "grid", gap: "12px" }}>
+                {palette.map((color) => (
                   <button
-                    onClick={copyColor}
+                    key={color}
+                    onClick={() => copyText(color)}
                     style={{
-                      width: "100%",
-                      padding: "16px",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "12px",
+                      padding: "12px",
                       borderRadius: "14px",
-                      border: "none",
-                      background: "#00bfa6",
-                      color: "white",
+                      border: "1px solid #e5e7eb",
+                      background: "white",
                       fontWeight: "900",
-                      fontSize: "18px",
+                      fontSize: "16px",
                     }}
                   >
-                    Copy HEX Color
+                    <span
+                      style={{
+                        width: "42px",
+                        height: "42px",
+                        borderRadius: "10px",
+                        background: color,
+                        border: "1px solid #ddd",
+                      }}
+                    />
+                    {color}
                   </button>
-                </div>
-              )}
-            </>
+                ))}
+              </div>
+            </div>
           )}
 
           <div
