@@ -10,20 +10,36 @@ export default function Home() {
         ["📄 PNG to JPG Converter", "/png-to-jpg", "Convert PNG images into JPG files for smaller uploads."],
       ],
     },
-    {
-      title: "🖼️ Image Editing Tools",
-      tools: [
-        ["✂️ Social Media Cropper", "/crop", "Resize Canva graphics for Instagram posts, Pinterest pins, YouTube thumbnails, Facebook posts, and social media marketing."],
-        ["🔄 Image Rotator", "/rotate", "Rotate images 90°, 180°, or 270° in seconds."],
-        ["↔️ Image Flipper", "/flip", "Flip images horizontally or vertically with one click."],
-        ["✨ Background Remover", "/background-remover", "Coming soon: remove image backgrounds for product photos and graphics."],
-      ],
-      [
-  "🎨 Color Picker From Image",
-  "/color-picker",
-  "Extract colors from images for Canva, Etsy branding, websites, and social media."
-],
-    },
+{
+  title: "🖼️ Image Editing Tools",
+  tools: [
+    [
+      "✂️ Social Media Cropper",
+      "/crop",
+      "Create perfectly sized images for Instagram, Pinterest, YouTube, and Facebook.",
+    ],
+    [
+      "🎨 Color Picker From Image",
+      "/color-picker",
+      "Extract colors from images for Canva, Etsy branding, websites, and social media.",
+    ],
+    [
+      "🔄 Image Rotator",
+      "/rotate",
+      "Rotate images 90°, 180°, or 270° in seconds.",
+    ],
+    [
+      "↔️ Image Flipper",
+      "/flip",
+      "Flip images horizontally or vertically with one click.",
+    ],
+    [
+      "✨ Background Remover",
+      "/background-remover",
+      "Coming soon: remove image backgrounds for product photos and graphics.",
+    ],
+  ],
+},
     {
       title: "🔄 Image Converters",
       tools: [
