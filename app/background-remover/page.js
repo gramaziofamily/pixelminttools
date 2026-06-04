@@ -28,8 +28,7 @@ export default function BackgroundRemoverPage() {
           }}
         >
           <p style={{ fontSize: "18px", lineHeight: "1.7", color: "#516174" }}>
-            AI background removal is coming soon. We are working on a better
-            version that can remove real photo backgrounds more accurately.
+           beta version.
           </p>
         </div>
       </section>
